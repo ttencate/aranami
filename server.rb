@@ -16,6 +16,12 @@ get '/*' do |filename|
   filename = 'index.html' if filename == ''
   task = Rake::Task[filename]
   task.reenable
-  task.invoke
+  begin
+    task.invoke
+  rescue RuntimeError
+    print 'Rake error'
+    status 500
+    halt
+  end
   send_file filename
 end
