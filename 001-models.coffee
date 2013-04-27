@@ -5,6 +5,12 @@ class Split
   constructor: (@splitDirection, @fraction, @left, @right) ->
 
 class Field
+  # Filled by updateBoard()
+  x: undefined
+  y: undefined
+  width: undefined
+  height: undefined
+  
   constructor: (@gas, @heat) ->
 
   split: (direction, fraction) ->
