@@ -15,9 +15,9 @@ class Renderer
     @context.strokeStyle = 'rgba(0, 0, 0, 1)'
 
 
-    fillRed   = 255
-    fillGreen = 255
-    fillBlue  = 255
+    fillRed   = 255 - (field.pressure * 100000)
+    fillGreen = 255 - (field.pressure * 100000)
+    fillBlue  = 255 - (field.pressure * 100000)
 
     heat = (field.heat - 1) * 50
     if heat > 0
@@ -27,7 +27,7 @@ class Renderer
       fillRed   = fillRed + heat
       fillGreen = fillGreen + heat
 
-    @context.fillStyle   = 'rgba(' + fillRed + ', ' + fillGreen + ', ' + fillBlue + ', 1)'
+    @context.fillStyle   = 'rgba(' + Math.round(fillRed) + ', ' + Math.round(fillGreen) + ', ' + Math.round(fillBlue) + ', 1)'
     @context.lineWidth = 10.0
     @context.fillRect field.x, field.y, field.width, field.height
     @context.strokeRect field.x, field.y, field.width, field.height

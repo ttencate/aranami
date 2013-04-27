@@ -1,4 +1,4 @@
-UPDATE_SPEED = 1000.0
+UPDATE_SPEED = 200.0
 
 # Returns force on left, right, bottom, top in outward direction
 updateNode = (node, x, y, width, height, dt) ->
@@ -8,6 +8,7 @@ updateNode = (node, x, y, width, height, dt) ->
     node.y = y
     node.width = width
     node.height = height
+    node.pressure = pressure
     return {
       fLeft: pressure
       fRight: pressure
