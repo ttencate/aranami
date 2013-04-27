@@ -8,6 +8,9 @@ window.requestAnimationFrame =
 
 window.localStorage = window.localStorage || {}
 
+#garden = new Garden(new Rake(30, 300, 0.5 * Math.PI))
+garden = new Garden(new Rake(400 - RAKE_LENGTH/2, 300 - RAKE_WIDTH/2, 0))
+
 $(->
   canvas = $('#canvas')[0]
 
@@ -22,12 +25,14 @@ $(->
     event.preventDefault()
 
   ctx = canvas.getContext('2d')
-  lastUpdate = Date.now()
-  update = ->
-    now = Date.now()
-    delta = Math.min(50, now - lastUpdate)
-    lastUpdate = now
+  # lastUpdate = Date.now()
+  # update = ->
+  #   now = Date.now()
+  #   delta = Math.min(50, now - lastUpdate)
+  #   lastUpdate = now
 
-    window.requestAnimationFrame(update)
-  window.requestAnimationFrame(update)
+  #   window.requestAnimationFrame(update)
+  # window.requestAnimationFrame(update)
+  
+  updateDom()
 )
