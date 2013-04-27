@@ -14,7 +14,7 @@ class Renderer
   renderNode: (field) =>
     @context.strokeStyle = 'rgba(0, 0, 0, 1)'
     @context.fillStyle   = 'rgba(' + field.gas * field.heat + ', ' + field.gas * field.heat + ', 255, 1)'
-
+    @context.lineWidth = 20.0
     @context.fillRect field.x, field.y, field.width, field.height
     @context.strokeRect field.x, field.y, field.width, field.height
 
