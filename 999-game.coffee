@@ -31,7 +31,7 @@ $(->
     lastUpdate = now
 
     updateBoard(board, delta)
-    renderer.render
+    renderer.render()
 
     window.requestAnimationFrame(update)
   window.requestAnimationFrame(update)

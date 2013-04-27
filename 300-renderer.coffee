@@ -14,10 +14,10 @@ class Renderer
     @context.clearRect 0, 0, @board.width, @board.height
 
     for field in @board.getFields()
-      @renderNode field, 0, 0, @board.width, @board.height
+      @renderNode field
 
   renderNode: (field) =>
     @context.strokeStyle = 'rgba(0,0,0,1)'
     @context.fillStyle = 'rgba(1,1,1,1)'
-    @context.fillRect node.x, node.y, node.width, node.height
+    @context.fillRect field.x, field.y, field.width, field.height
 
