@@ -1,3 +1,6 @@
+HOT = 2.0
+COLD = 0.3
+
 class Board
   constructor: (@width, @height, @root) ->
 
@@ -34,8 +37,6 @@ class Split
 
 class Field
   parent: undefined
-  hot: 2.0
-  cold: 0.3
 
   # Filled by updateBoard()
   x: undefined
@@ -52,9 +53,9 @@ class Field
 
   cycleHeat: ->
     if @heat == 1.0
-      @heat = @hot
-    else if @heat == @hot
-      @heat = @cold
+      @heat = HOT
+    else if @heat == HOT
+      @heat = COLD
     else
       @heat = 1.0
 
