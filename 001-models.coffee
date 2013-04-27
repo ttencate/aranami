@@ -27,6 +27,9 @@ class Board
     f(@root)
     return splits
 
+  getTargets: ->
+    return @targets
+
   findField: (x,y) ->
     for field in @getFields()
       if x >= field.x and y >= field.y and x <= field.x + field.width and y <= field.y + field.height
@@ -76,6 +79,8 @@ class Field
     return new Split(direction, fraction, left, right)
 
   cycleHeat: ->
+    return false if @isTarget
+
     if @heat == 1.0
       @heat = HOT
     else if @heat == HOT

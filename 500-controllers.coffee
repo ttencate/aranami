@@ -105,7 +105,7 @@ randomBoard = (width, height, numSplits, numHot, numCold, numTargets) ->
 
   # Find target positions
   updatePositions(board.root, 0, 0, board.width, board.height)
-  for target in board.getFields((field) -> field.isTarget)
+  for target in board.getFields() when target.isTarget
     board.targets.push({ x: target.x, y: target.y, width: target.width, height: target.height })
 
   # Remove heat again
