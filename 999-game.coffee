@@ -22,12 +22,13 @@ $(->
 
   $("#canvas").click (event) ->
     renderer.findField(event.offsetX, event.offsetY).cycleHeat()
+    event.preventDefault()
 
   ctx = canvas.getContext('2d')
   lastUpdate = Date.now()
   update = ->
     now = Date.now()
-    delta = now - lastUpdate
+    delta = Math.min(50, now - lastUpdate)
     lastUpdate = now
 
     updateBoard(board, delta)
