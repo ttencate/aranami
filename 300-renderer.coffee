@@ -28,7 +28,7 @@ class Renderer
       fillGreen = fillGreen + heat
 
     @context.fillStyle   = 'rgba(' + fillRed + ', ' + fillGreen + ', ' + fillBlue + ', 1)'
-    @context.lineWidth = 20.0
+    @context.lineWidth = 10.0
     @context.fillRect field.x, field.y, field.width, field.height
     @context.strokeRect field.x, field.y, field.width, field.height
 
