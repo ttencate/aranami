@@ -1,15 +1,10 @@
 class Renderer
   constructor: (@board, @canvas) ->
-    @canvas.width(@board.width)
-    @canvas.height(@board.height)
+    @canvas[0].width = @board.width
+    @canvas[0].height = @board.height
     @context = @canvas[0].getContext('2d')
-    @lastUpdate = Date.now()
 
   render: =>
-    now = Date.now()
-    delta = now - @lastUpdate
-    @lastUpdate = now
-
     @context.setTransform 1, 0, 0, 1, 0, 0
     @context.clearRect 0, 0, @board.width, @board.height
 
