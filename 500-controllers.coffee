@@ -23,7 +23,7 @@ updateNode = (node, x, y, width, height, dt) ->
       fBottom: pressure * width
       fTop: pressure * width
     }
-  if node.splitDirection == 'h'
+  if node.splitDirection == 'v'
     left = updateNode(node.left, x, y, width * node.fraction, height, dt)
     right = updateNode(node.right, x + width * node.fraction, y, width * (1 - node.fraction), height, dt)
     force = left.fRight - right.fLeft
@@ -57,12 +57,15 @@ updateBoard = (board, dt) ->
 
 randomBoard = (width, height, numSplits) ->
   board = new Board(width, height, new Field(100, 1))
+  hv = ['h', 'v']
   for i in [0...numSplits]
     fields = board.getFields()
     index = Math.floor(Math.random() * fields.length)
     field = fields[index]
     parent = field.parent
-    split = field.split((if Math.random() < 0.5 then 'h' else 'v'), 0.1 + 0.8 * Math.random())
+    range = 0.8 * Math.pow(1/2, field.getDepth())
+    fraction = 0.5 * (1 - range) + Math.random() * range
+    split = field.split(hv[i % 2], fraction)
     split.fraction = Math.random()
     if parent == undefined
       board.root = split

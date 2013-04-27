@@ -49,3 +49,11 @@ class Field
       @heat = @cold
     else
       @heat = 1.0
+
+  getDepth: ->
+    depth = 0
+    parent = @parent
+    while parent
+      parent = parent.parent
+      depth++
+    return depth
