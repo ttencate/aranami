@@ -24,20 +24,24 @@ class Renderer
   renderNode: (field, meanPressure) =>
     @context.strokeStyle = 'rgba(0, 0, 0, 1)'
 
-    pressure = Math.abs (field.pressure - meanPressure) * 400000
-    fillRed   = 255 - pressure
-    fillGreen = 255 - pressure
-    fillBlue  = 255 - pressure
+    if field.isTarget
+      @context.fillStyle   = 'yellow'
+    else
+      pressure = Math.abs (field.pressure - meanPressure) * 400000
+      fillRed   = 255 - pressure
+      fillGreen = 255 - pressure
+      fillBlue  = 255 - pressure
 
-    heat = (field.heat - 1) * 50
-    if field.isHot()
-      fillBlue = 0
-      fillGreen = 0
-    else if field.isCold()
-      fillRed   = 0
-      fillGreen = 0
+      heat = (field.heat - 1) * 50
+      if field.isHot()
+        fillBlue = 0
+        fillGreen = 0
+      else if field.isCold()
+        fillRed   = 0
+        fillGreen = 0
 
-    @context.fillStyle   = 'rgba(' + Math.round(fillRed) + ', ' + Math.round(fillGreen) + ', ' + Math.round(fillBlue) + ', 1)'
+      @context.fillStyle   = 'rgba(' + Math.round(fillRed) + ', ' + Math.round(fillGreen) + ', ' + Math.round(fillBlue) + ', 1)'
+
     @context.lineWidth = @strokeWidth
     @context.fillRect field.x, field.y, field.width, field.height
     @context.strokeRect field.x, field.y, field.width, field.height
