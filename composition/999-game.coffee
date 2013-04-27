@@ -8,8 +8,11 @@ window.requestAnimationFrame =
 
 window.localStorage = window.localStorage || {}
 
+board = randomBoard(800, 600, 9, 1, 1, 1)
+
 $(->
   canvas = $('#canvas')[0]
+  window.renderer = new Renderer(board, $(canvas))
 
   createjs.Sound.registerSound('test.mp3|test.ogg', 'test', 3)
   $('#test-sound').click((e) ->
@@ -18,7 +21,7 @@ $(->
   )
 
   $("#canvas").click (event) ->
-    # TODO things
+    renderer.findField(event.offsetX, event.offsetY).cycleHeat()
     event.preventDefault()
 
   ctx = canvas.getContext('2d')
@@ -27,6 +30,9 @@ $(->
     now = Date.now()
     delta = Math.min(50, now - lastUpdate)
     lastUpdate = now
+
+    updateBoard(board, delta)
+    renderer.render()
 
     window.requestAnimationFrame(update)
   window.requestAnimationFrame(update)
