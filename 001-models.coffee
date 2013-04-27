@@ -26,6 +26,8 @@ class Split
 
 class Field
   parent: undefined
+  hot: 2.0
+  cold: 0.3
 
   # Filled by updateBoard()
   x: undefined
@@ -42,8 +44,8 @@ class Field
 
   cycleHeat: ->
     if @heat == 1.0
-      @heat = 1.5
-    else if @heat == 1.5
-      @heat = 0.5
+      @heat = @hot
+    else if @heat == @hot
+      @heat = @cold
     else
       @heat = 1.0
