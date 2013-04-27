@@ -56,7 +56,7 @@ class Field
     return new Split(direction, fraction, left, right)
 
   cycleHeat: ->
-    return false if isTarget
+    return false if @isTarget
 
     if @heat == 1.0
       @heat = HOT
