@@ -14,8 +14,8 @@ board = new Board 500, 400,
     new Field 20, 1.5
 
 $(->
-
   canvas = $('#canvas')[0]
+  window.renderer = new Renderer(board, $(canvas))
 
   createjs.Sound.registerSound('test.mp3|test.ogg', 'test', 3)
   $('#test-sound').click((e) ->
@@ -31,9 +31,7 @@ $(->
     lastUpdate = now
 
     updateBoard(board, delta)
-
-    ctx.setTransform(1, 0, 0, 1, 0, 0)
-    ctx.clearRect(0, 0, canvas.width, canvas.height)
+    renderer.render()
 
     window.requestAnimationFrame(update)
   window.requestAnimationFrame(update)
