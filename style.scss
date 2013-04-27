@@ -1,6 +1,8 @@
 @import "compass/css3/transform";
 
-$rake-width: 30px;
+$rake-thickness: 30px;
+$rake-length: 300px;
+$handle-size: 50px;
 
 .container {
   position: relative;
@@ -10,25 +12,29 @@ canvas {
   background-color: #eed;
 }
 
-#rake {
-  width: $rake-width;
-  height: 300px;
+.rake {
+  width: $rake-length;
+  height: $rake-thickness;
+  margin-left: -($rake-length / 2);
+  margin-top: -($rake-thickness / 2);
   position: absolute;
-  left: 20px;
-  top: 150px;
+  left: 0;
+  top: 0;
   background-color: red;
+  overflow: visible;
 }
 
 .handle {
-  width: $rake-width;
-  height: $rake-width;
+  width: $handle-size;
+  height: $handle-size;
   position: absolute;
-  left: 0px;
+  top: ($rake-thickness - $handle-size) / 2;
   background-color: blue;
 }
 
 .handle:hover {
   background-color: yellow;
+  cursor: pointer;
 }
 
 .handle:active {
@@ -36,9 +42,9 @@ canvas {
 }
 
 .handle-left {
-  top: 0px;
+  left: ($rake-thickness - $handle-size) / 2;
 }
 
 .handle-right {
-  bottom: 0px;
+  right: ($rake-thickness - $handle-size) / 2;
 }
