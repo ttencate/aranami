@@ -24,12 +24,12 @@ class Renderer
     fillBlue  = 255 - (field.pressure * 100000)
 
     heat = (field.heat - 1) * 50
-    if heat > 0
-      fillBlue = fillBlue - heat
-      fillGreen = fillGreen - heat
-    else if heat < 0
-      fillRed   = fillRed + heat
-      fillGreen = fillGreen + heat
+    if field.heat == field.hot
+      fillBlue = 0
+      fillGreen = 0
+    else if field.heat == field.cold
+      fillRed   = 0
+      fillGreen = 0
 
     @context.fillStyle   = 'rgba(' + Math.round(fillRed) + ', ' + Math.round(fillGreen) + ', ' + Math.round(fillBlue) + ', 1)'
     @context.lineWidth = @strokeWidth
