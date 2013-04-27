@@ -2,7 +2,7 @@ class Board
   constructor: (@width, @height, @root) ->
 
 class Split
-  constructor: (@left, @right, @splitDirection, @fraction) ->
+  constructor: (@splitDirection, @fraction, @left, @right) ->
 
 class Field
   constructor: (@gas, @heat) ->

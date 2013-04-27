@@ -15,7 +15,7 @@ def generate(from_ext, to_ext, &block)
 end
 
 file 'composition.js' => Dir["*.coffee"] do
-  sh 'cat *.coffee | coffee -c -s > composition.js'
+  sh 'cat *.coffee | coffee -c -s -b > composition.js'
 end
 
 generate '.svg', '.png' do |from, to|
