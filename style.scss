@@ -1,8 +1,8 @@
 @import "compass/css3/transform";
 
-$rake-thickness: 30px;
-$rake-length: 300px;
-$handle-size: 50px;
+$rake-thickness: 60px;
+$rake-length: 360px;
+$handle-size: 80px;
 
 .container {
   position: relative;
@@ -20,7 +20,8 @@ canvas {
   position: absolute;
   left: 0;
   top: 0;
-  background-color: red;
+  // background-color: red;
+  background-image: url("hark.png");
   overflow: visible;
 }
 
@@ -29,16 +30,16 @@ canvas {
   height: $handle-size;
   position: absolute;
   top: ($rake-thickness - $handle-size) / 2;
-  background-color: blue;
+  background-color: rgba(0,0,255,0.5);
 }
 
 .handle:hover {
-  background-color: yellow;
+  background-color: rgba(255,255,0,0.5);
   cursor: pointer;
 }
 
 .handle:active {
-  background-color: green;
+  background-color: rgba(0,255,0,0.5);
 }
 
 .handle-left {
