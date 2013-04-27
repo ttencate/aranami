@@ -21,7 +21,7 @@ $(->
   )
 
   $("#canvas").click (event) ->
-    board.findField(event.offsetX, event.offsetY).cycleHeat()
+    renderer.findField(event.offsetX, event.offsetY).cycleHeat()
 
   ctx = canvas.getContext('2d')
   lastUpdate = Date.now()

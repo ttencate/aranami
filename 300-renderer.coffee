@@ -6,6 +6,9 @@ class Renderer
     @canvas[0].height = @board.height + @strokeWidth
     @context = @canvas[0].getContext('2d')
 
+  findField: (x, y) ->
+    @board.findField(x * @board.width / @canvas[0].width, y * @board.height / @canvas[0].height)
+
   render: =>
     @context.setTransform 1, 0, 0, 1, 0, 0
     @context.clearRect 0, 0, @board.width, @board.height
