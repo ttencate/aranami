@@ -17,10 +17,30 @@ class Board
     f(@root)
     return fields
 
+  getSplits: ->
+    splits = []
+    f = (node) ->
+      if node instanceof Split
+        splits.push(node)
+        f(node.left)
+        f(node.right)
+    f(@root)
+    return splits
+
   findField: (x,y) ->
     for field in @getFields()
       if x >= field.x and y >= field.y and x <= field.x + field.width and y <= field.y + field.height
         return field
+
+  randomField: (predicate) ->
+    if predicate
+      fields = (field for field in @getFields() when predicate(field))
+    else
+      fields = @getFields()
+    if fields == []
+      throw "No fields match!"
+    index = Math.floor(Math.random() * fields.length)
+    return fields[index]
 
   meanPressure: ->
     fields = @getFields()

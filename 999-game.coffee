@@ -8,7 +8,7 @@ window.requestAnimationFrame =
 
 window.localStorage = window.localStorage || {}
 
-board = randomBoard(800, 600, 9)
+board = randomBoard(800, 600, 9, 1, 1, 1)
 
 $(->
   canvas = $('#canvas')[0]
