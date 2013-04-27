@@ -19,15 +19,16 @@ class Renderer
   renderNode: (field) =>
     @context.strokeStyle = 'rgba(0, 0, 0, 1)'
 
-    fillRed   = 255 - (field.pressure * 100000)
-    fillGreen = 255 - (field.pressure * 100000)
-    fillBlue  = 255 - (field.pressure * 100000)
+    pressure = Math.abs (field.pressure - @board.meanPressure()) * 400000
+    fillRed   = 255 - pressure
+    fillGreen = 255 - pressure
+    fillBlue  = 255 - pressure
 
     heat = (field.heat - 1) * 50
-    if field.heat == field.hot
+    if field.isHot()
       fillBlue = 0
       fillGreen = 0
-    else if field.heat == field.cold
+    else if field.isCold()
       fillRed   = 0
       fillGreen = 0
 

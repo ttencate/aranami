@@ -17,6 +17,14 @@ class Board
       if x >= field.x and y >= field.y and x <= field.x + field.width and y <= field.y + field.height
         return field
 
+  meanPressure: ->
+    fields = @getFields()
+    total = fields.reduce (sum, field) ->
+      sum + field.pressure
+    , 0
+    total / fields.length
+
+
 class Split
   parent: undefined
 
@@ -49,6 +57,12 @@ class Field
       @heat = @cold
     else
       @heat = 1.0
+
+  isHot: ->
+    @heat > 1
+
+  isCold: ->
+    @heat < 1
 
   getDepth: ->
     depth = 0
