@@ -13,9 +13,15 @@ class Board
     return fields
 
 class Split
+  parent: undefined
+
   constructor: (@splitDirection, @fraction, @left, @right) ->
+    @left.parent = this
+    @right.parent = this
 
 class Field
+  parent: undefined
+
   # Filled by updateBoard()
   x: undefined
   y: undefined
@@ -25,5 +31,6 @@ class Field
   constructor: (@gas, @heat) ->
 
   split: (direction, fraction) ->
-    # returns a split with new left/right nodes,
-    # which the caller use to replace this Field
+    left = new Field(fraction * @gas, @heat)
+    right = new Field((1 - fraction) * @gas, @heat)
+    return new Split(direction, fraction, left, right)

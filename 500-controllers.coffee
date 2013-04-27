@@ -46,3 +46,20 @@ updateNode = (node, x, y, width, height, dt) ->
 updateBoard = (board, dt) ->
   updateNode(board.root, 0, 0, board.width, board.height, dt)
 
+randomBoard = (width, height, numSplits) ->
+  board = new Board(width, height, new Field(100, 1))
+  for i in [0...numSplits]
+    fields = board.getFields()
+    index = Math.floor(Math.random() * fields.length)
+    field = fields[index]
+    parent = field.parent
+    split = field.split((if Math.random() < 0.5 then 'h' else 'v'), Math.random())
+    if parent == undefined
+      board.root = split
+    else
+      if parent.left == field
+        parent.left = split
+      else
+        parent.right = split
+  return board
+
