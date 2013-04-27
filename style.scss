@@ -6,6 +6,8 @@ $handle-size: 300px;
 
 .container {
   position: relative;
+  width: 800px;
+  height: 600px;
 }
 
 canvas {
@@ -48,4 +50,11 @@ canvas {
 
 .handle-right {
   right: ($rake-thickness - $handle-size) / 2;
+}
+
+.rock {
+  position: absolute;
+  width: 60px;
+  height: 60px;
+  background-color: gray;
 }
