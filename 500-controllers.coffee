@@ -1,4 +1,12 @@
-UPDATE_SPEED = 200.0
+UPDATE_SPEED = 1.0
+MAX_FORCE = 0.1
+MIN_FRACTION = 0.001
+MAX_FRACTION = 0.999
+
+Math.clamp = (min, max, x) ->
+  if x < min then return min
+  if x > max then return max
+  return x
 
 # Returns force on left, right, bottom, top in outward direction
 updateNode = (node, x, y, width, height, dt) ->
@@ -10,19 +18,19 @@ updateNode = (node, x, y, width, height, dt) ->
     node.height = height
     node.pressure = pressure
     return {
-      fLeft: pressure
-      fRight: pressure
-      fBottom: pressure
-      fTop: pressure
+      fLeft: pressure * height
+      fRight: pressure * height
+      fBottom: pressure * width
+      fTop: pressure * width
     }
   if node.splitDirection == 'h'
     left = updateNode(node.left, x, y, width * node.fraction, height, dt)
     right = updateNode(node.right, x + width * node.fraction, y, width * (1 - node.fraction), height, dt)
     force = left.fRight - right.fLeft
+    force = Math.clamp(-MAX_FORCE, MAX_FORCE, force)
     delta = UPDATE_SPEED * dt * force / width
     node.fraction += delta
-    if node.fraction < 0 then node.fraction = 0.001
-    if node.fraction > 1 then node.fraction = 0.999
+    node.fraction = Math.clamp(MIN_FRACTION, MAX_FRACTION, node.fraction)
     return {
       fLeft: left.fLeft
       fRight: right.fRight
@@ -33,10 +41,10 @@ updateNode = (node, x, y, width, height, dt) ->
     top = updateNode(node.left, x, y, width, height * node.fraction, dt)
     bottom = updateNode(node.right, x, y + height * node.fraction, width, height * (1 - node.fraction), dt)
     force = top.fBottom - bottom.fTop
+    force = Math.clamp(-MAX_FORCE, MAX_FORCE, force)
     delta = UPDATE_SPEED * dt * force / width
     node.fraction += delta
-    if node.fraction < 0 then node.fraction = 0.001
-    if node.fraction > 1 then node.fraction = 0.999
+    node.fraction = Math.clamp(MIN_FRACTION, MAX_FRACTION, node.fraction)
     return {
       fLeft: top.fLeft + bottom.fLeft
       fRight: top.fRight + bottom.fRight
@@ -54,13 +62,14 @@ randomBoard = (width, height, numSplits) ->
     index = Math.floor(Math.random() * fields.length)
     field = fields[index]
     parent = field.parent
-    split = field.split((if Math.random() < 0.5 then 'h' else 'v'), Math.random())
+    split = field.split((if Math.random() < 0.5 then 'h' else 'v'), 0.1 + 0.8 * Math.random())
+    split.fraction = Math.random()
     if parent == undefined
       board.root = split
     else
       if parent.left == field
         parent.left = split
-      else
+      else if parent.right == field
         parent.right = split
   return board
 
