@@ -11,15 +11,17 @@ class Renderer
     @context.clearRect 0, 0, @board.width, @board.height
 
     @context.translate(@strokeWidth/2, @strokeWidth/2)
+
+    meanPressure = @board.meanPressure()
     for field in @board.getFields()
-      @renderNode field
+      @renderNode field, meanPressure
     @context.translate(-@strokeWidth/2, -@strokeWidth/2)
 
 
-  renderNode: (field) =>
+  renderNode: (field, meanPressure) =>
     @context.strokeStyle = 'rgba(0, 0, 0, 1)'
 
-    pressure = Math.abs (field.pressure - @board.meanPressure()) * 400000
+    pressure = Math.abs (field.pressure - meanPressure) * 400000
     fillRed   = 255 - pressure
     fillGreen = 255 - pressure
     fillBlue  = 255 - pressure
