@@ -5,10 +5,17 @@
     <script src="http://code.createjs.com/soundjs-0.4.0.min.js"></script>
     <script src="http://ajax.googleapis.com/ajax/libs/jquery/2.0.0/jquery.min.js"></script>
     <script src="composition.js"></script>
+    <link rel="stylesheet" href="style.css">
   </head>
   <body>
     <h1>Ludum Dare 26</h1>
-    <p><canvas id="canvas" width="810" height="610"></canvas></p>
+    <div class="container">
+      <p><canvas id="canvas" width="800" height="600"></canvas></p>
+      <div id="rake">
+        <div class="handle handle-left"></div>
+        <div class="handle handle-right"></div>
+      </div>
+    </div>
     <p><a id="test-sound" href="#">Make a sound</a></p>
     <p><a href="composition/index.html">Composition No. 10 (unfinished bonus game)</a></p>
   </body>

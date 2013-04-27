@@ -1,0 +1,44 @@
+@import "compass/css3/transform";
+
+$rake-width: 30px;
+
+.container {
+  position: relative;
+}
+
+canvas {
+  background-color: #eed;
+}
+
+#rake {
+  width: $rake-width;
+  height: 300px;
+  position: absolute;
+  left: 20px;
+  top: 150px;
+  background-color: red;
+}
+
+.handle {
+  width: $rake-width;
+  height: $rake-width;
+  position: absolute;
+  left: 0px;
+  background-color: blue;
+}
+
+.handle:hover {
+  background-color: yellow;
+}
+
+.handle:active {
+  background-color: green;
+}
+
+.handle-left {
+  top: 0px;
+}
+
+.handle-right {
+  bottom: 0px;
+}
