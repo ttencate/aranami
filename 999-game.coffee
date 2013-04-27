@@ -20,6 +20,9 @@ $(->
     e.preventDefault()
   )
 
+  $("#canvas").click (event) ->
+    board.findField(event.offsetX, event.offsetY).cycleHeat()
+
   ctx = canvas.getContext('2d')
   lastUpdate = Date.now()
   update = ->
