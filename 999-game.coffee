@@ -8,8 +8,8 @@ window.requestAnimationFrame =
 
 window.localStorage = window.localStorage || {}
 
-#garden = new Garden(new Rake(30, 300, 0.5 * Math.PI))
-garden = new Garden(new Rake(400 - RAKE_LENGTH/2, 300 - RAKE_WIDTH/2, 0))
+garden = new Garden(new Rake(30 + RAKE_WIDTH, 300 - RAKE_LENGTH/2, 0.5 * Math.PI))
+#garden = new Garden(new Rake(400 - RAKE_LENGTH/2, 300 - RAKE_WIDTH/2, 0))
 
 $(->
   canvas = $('#canvas')[0]

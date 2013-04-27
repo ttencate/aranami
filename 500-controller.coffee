@@ -20,16 +20,11 @@ $(->
     handleOffset = draggedHandle.data('offset')
     [x, y] = [e.offsetX + handleOffset[0], e.offsetY + handleOffset[1]]
     [centerX, centerY] = draggedHandle.data('rotation-center')
-    console.log "handleOffset", handleOffset
-    console.log "xy", x, y
-    console.log "offset", e.offsetX, e.offsetY
-    console.log "grab vector", x - centerX, y - centerY
     angle = Math.atan2(y - centerY, x - centerX)
-    console.log "grab angle", angle
     draggedHandle.data('grab-angle', angle)
     e.preventDefault()
 
-  $(document).mousemove (e) ->
+  $('.handle').mousemove (e) ->
     if e.which != 1 then return
     handleOffset = draggedHandle.data('offset')
     [x, y] = [handleOffset[0] + e.offsetX, handleOffset[1] + e.offsetY]
