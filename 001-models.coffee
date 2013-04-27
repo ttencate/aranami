@@ -2,6 +2,8 @@ HOT = 2.0
 COLD = 0.3
 
 class Board
+  targets: []
+
   constructor: (@width, @height, @root) ->
 
   getFields: ->
@@ -43,6 +45,8 @@ class Field
   y: undefined
   width: undefined
   height: undefined
+
+  isTarget: false
 
   constructor: (@gas, @heat) ->
 
