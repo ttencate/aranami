@@ -17,6 +17,14 @@ class Board
     f(@root)
     return fields
 
+  getTargets: ->
+    field = new Field 20, 1
+    field.x = 20
+    field.y = 50
+    field.width = 200
+    field.height = 120
+    return [field]
+
   findField: (x,y) ->
     for field in @getFields()
       if x >= field.x and y >= field.y and x <= field.x + field.width and y <= field.y + field.height
