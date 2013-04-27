@@ -12,7 +12,9 @@ class Renderer
       @renderNode field
 
   renderNode: (field) =>
-    @context.strokeStyle = 'rgba(0,0,0,1)'
-    @context.fillStyle = 'rgba(1,1,1,1)'
+    @context.strokeStyle = 'rgba(0, 0, 0, 1)'
+    @context.fillStyle   = 'rgba(' + field.gas * field.heat + ', ' + field.gas * field.heat + ', 255, 1)'
+
     @context.fillRect field.x, field.y, field.width, field.height
+    @context.strokeRect field.x, field.y, field.width, field.height
 
