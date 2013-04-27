@@ -20,8 +20,8 @@ updateNode = (node, x, y, width, height, dt) ->
     force = left.fRight - right.fLeft
     delta = UPDATE_SPEED * dt * force / width
     node.fraction += delta
-    if node.fraction < 0 then node.fraction = 0
-    if node.fraction > 1 then node.fraction = 1
+    if node.fraction < 0 then node.fraction = 0.001
+    if node.fraction > 1 then node.fraction = 0.999
     return {
       fLeft: left.fLeft
       fRight: right.fRight
@@ -34,8 +34,8 @@ updateNode = (node, x, y, width, height, dt) ->
     force = top.fBottom - bottom.fTop
     delta = UPDATE_SPEED * dt * force / width
     node.fraction += delta
-    if node.fraction < 0 then node.fraction = 0
-    if node.fraction > 1 then node.fraction = 1
+    if node.fraction < 0 then node.fraction = 0.001
+    if node.fraction > 1 then node.fraction = 0.999
     return {
       fLeft: top.fLeft + bottom.fLeft
       fRight: top.fRight + bottom.fRight
