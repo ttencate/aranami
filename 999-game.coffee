@@ -30,14 +30,16 @@ $(->
     event.preventDefault()
 
   ctx = canvas.getContext('2d')
-  # lastUpdate = Date.now()
-  # update = ->
-  #   now = Date.now()
-  #   delta = Math.min(50, now - lastUpdate)
-  #   lastUpdate = now
+  lastUpdate = Date.now()
+  update = ->
+    now = Date.now()
+    dt = Math.min(50, now - lastUpdate)
+    lastUpdate = now
 
-  #   window.requestAnimationFrame(update)
-  # window.requestAnimationFrame(update)
+    updateGarden(dt)
+
+    window.requestAnimationFrame(update)
+  window.requestAnimationFrame(update)
 
   updateDom()
 )
