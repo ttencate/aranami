@@ -60,6 +60,10 @@ updateGarden = (dt) ->
   origin = rake.rotationOrigin
   if origin && rake.targetAngle != rake.angle
     da = rake.targetAngle - rake.angle
+    if da < -Math.PI
+      da += 2*Math.PI
+    if da > Math.PI
+      da -= 2*Math.PI
     m = MAX_ANGULAR_VELOCITY * dt
     clamped = false
     if da < -m
