@@ -13,7 +13,7 @@ loadLevel = (level) ->
     if DEBUG
       ((rock) ->
         rockDiv.mousemove (e) ->
-          if e.which == 1
+          if e.which == 1 && e.shiftKey
             pos = $(this).position()
             x = pos.left + e.offsetX - 30
             y = pos.top + e.offsetY - 30
