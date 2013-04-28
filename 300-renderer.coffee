@@ -28,6 +28,7 @@ makeRockDiv = (rock) ->
 
 loadLevel = (level) ->
   window.garden = level
+  window.score = 0
   $(".rock").remove()
   for rock in level.rocks
     rockDiv = makeRockDiv(rock)
