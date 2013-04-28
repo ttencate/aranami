@@ -5,7 +5,7 @@ RAKE_WIDTH = 53
 RAKE_TEETH = 12
 HANDLE_SIZE = 300
 MAX_ANGULAR_VELOCITY = 0.002
-DEBUG = true
+DEBUG = window.location.hostname == 'localhost'
 
 class Rake
   rotationOrigin: null
