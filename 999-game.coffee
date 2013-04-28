@@ -8,10 +8,15 @@ window.requestAnimationFrame =
 
 window.localStorage = window.localStorage || {}
 
-garden = new Garden(new Rake(20 + RAKE_WIDTH, 300 - RAKE_LENGTH/2, 0.5 * Math.PI))
-#garden = new Garden(new Rake(400 - RAKE_LENGTH/2, 300 - RAKE_WIDTH/2, 0))
+levels = [
+  -> new Garden(new Rake(20 + RAKE_WIDTH, 300 - RAKE_LENGTH/2, 0.5 * Math.PI),
+                [new Rock(37, 200), new Rock(250, 300), new Rock(550, 600)])
+  -> new Garden(new Rake(20 + RAKE_WIDTH, 300 - RAKE_LENGTH/2, 0.5 * Math.PI),
+                [])
+  ]
 
 $(->
+  loadLevel(levels[0]())
   canvas = $('#canvas')[0]
 
   createjs.Sound.registerSound('test.mp3|test.ogg', 'test', 3)
@@ -33,6 +38,6 @@ $(->
 
   #   window.requestAnimationFrame(update)
   # window.requestAnimationFrame(update)
-  
+
   updateDom()
 )

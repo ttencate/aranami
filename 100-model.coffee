@@ -7,5 +7,8 @@ class Rake
   # angle is in radians, 0 is horizontal
   constructor: (@x, @y, @angle) ->
 
+class Rock
+  constructor: (@x, @y) ->
+
 class Garden
-  constructor: (@rake) ->
+  constructor: (@rake, @rocks) ->
