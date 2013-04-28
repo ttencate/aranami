@@ -102,9 +102,10 @@ $(->
 
     updateGarden(dt)
 
-    ctx.setTransform(1, 0, 0, 1, 0, 0)
-    ctx.clearRect(0,0,960,600)
-    if DEBUG then renderDebug()
+    if DEBUG
+      ctx.setTransform(1, 0, 0, 1, 0, 0)
+      ctx.clearRect(0, 0, 800, 600)
+      renderDebug()
 
     window.requestAnimationFrame(update)
   window.requestAnimationFrame(update)
