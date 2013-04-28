@@ -18,6 +18,7 @@ makeRockDiv = (rock) ->
         rock.y = y
         $(this).css({left: "#{x}px", top: "#{y}px"})
         e.preventDefault()
+        e.stopPropagation()
     rockDiv.mousedown (e) ->
       if e.which == 1 && e.ctrlKey
         rockDiv.remove()

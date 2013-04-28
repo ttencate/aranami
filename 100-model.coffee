@@ -74,11 +74,11 @@ class Sand
     @drawTo(sandCtx, {x: x - 1, y: y - 1, width: @dentCanvas.width + 2, height: @dentCanvas.height + 2})
 
   drawTo: (ctx, rect) ->
-    if !rect then rect = {x: 1, y: 1, width: GARDEN_WIDTH-1, height: GARDEN_HEIGHT-1}
+    if !rect then rect = {x: 1, y: 1, width: GARDEN_WIDTH-2, height: GARDEN_HEIGHT-2}
     rect.x = Math.max(1, rect.x)
     rect.y = Math.max(1, rect.y)
     rect.width = Math.min(GARDEN_WIDTH - 1 - rect.x, rect.width)
-    rect.height = Math.min(GARDEN_WIDTH - 1 - rect.y, rect.height)
+    rect.height = Math.min(GARDEN_HEIGHT - 1 - rect.y, rect.height)
     input = @ctx.getImageData(rect.x - 1, rect.y - 1, rect.width + 2, rect.height + 2)
     output = ctx.createImageData(rect.width, rect.height)
     index = (x, y) -> 4 * ((rect.width + 2) * y + x)
