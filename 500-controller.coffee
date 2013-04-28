@@ -111,7 +111,7 @@ updateGarden = (dt) ->
       rake.y = oldY
       rake.angle = oldAngle
     else
-      drawDents()
       if !clamped
         rake.angle = rake.targetAngle
-  updateDom()
+      drawDents()
+      updateDom()
