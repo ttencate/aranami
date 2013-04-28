@@ -15,5 +15,8 @@ class Rake
       y: -dx * Math.sin(@angle) + dy * Math.cos(@angle)
     }
 
+class Rock
+  constructor: (@x, @y) ->
+
 class Garden
-  constructor: (@rake) ->
+  constructor: (@rake, @rocks) ->
