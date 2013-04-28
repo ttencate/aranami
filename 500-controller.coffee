@@ -4,7 +4,7 @@ $(->
 
   incrementScore = ->
     window.score = window.score + 1
-    garden.sand.drawText('|', (20*window.score) - 10, 45)
+    garden.sand.drawText('|', (15*window.score) - 10, 45)
 
 
   toPos = (element, e) ->
