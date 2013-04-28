@@ -3,7 +3,7 @@ $(->
   globalOrigin = null
 
   toPos = (element, e) ->
-    pagePosition = $(element).position()
+    pagePosition = $(element).offset()
     return {x: e.pageX - pagePosition.left, y: e.pageY - pagePosition.top}
 
   beginDrag = (pos) ->
