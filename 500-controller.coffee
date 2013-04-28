@@ -12,9 +12,9 @@ $(->
     localOrigin = null
     if local.y > -20 && local.y < RAKE_WIDTH + 20
       if local.x < RAKE_LENGTH / 2
-        localOrigin = {x: RAKE_LENGTH - 10, y: 3}
+        localOrigin = {x: RAKE_LENGTH - 1, y: 2}
       else
-        localOrigin = {x: 10, y: 3}
+        localOrigin = {x: 1, y: 2}
     if localOrigin
       globalOrigin = rake.toGlobal(localOrigin)
       grabAngle = Math.atan2(pos.y - globalOrigin.y, pos.x - globalOrigin.x)
