@@ -85,6 +85,7 @@ $(->
   loadLevel(levels[0]())
   ctx = $('#canvas')[0].getContext('2d')
   sandCtx = $('#sand')[0].getContext('2d')
+  garden.sand.drawTo(sandCtx)
 
   window.WebFontConfig = {
     custom: {

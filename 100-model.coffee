@@ -15,7 +15,7 @@ class Rake
     [{x: 1, y: 2}, {x: RAKE_LENGTH - 1, y: 2}]
   ]
 
-  teeth: ({x: 1 + (RAKE_LENGTH - 1) / (RAKE_TEETH - 1) * i, y: 2} for i in [0...RAKE_TEETH])
+  teeth: ({x: 1 + (RAKE_LENGTH - 6) / (RAKE_TEETH - 1) * i, y: 2} for i in [0...RAKE_TEETH])
 
   # x and y are the top left
   # angle is in radians, 0 is horizontal
@@ -40,48 +40,59 @@ class Sand
   light: {x: Math.cos(2/3 * Math.PI), y: -Math.sin(2/3 * Math.PI)}
 
   constructor: ->
-    S = 16
+    S = 25
     @dentCanvas = $("<canvas width='#{S}' height='#{S}'>")[0]
-    ctx = @dentCanvas.getContext('2d')
-    id = ctx.createImageData(S, S)
+    dentCtx = @dentCanvas.getContext('2d')
+    @bumpCanvas = $("<canvas width='#{S}' height='#{S}'>")[0]
+    bumpCtx = @bumpCanvas.getContext('2d')
+    did = dentCtx.createImageData(S, S)
+    bid = bumpCtx.createImageData(S, S)
     i = 0
     for y in [0...S]
       for x in [0...S]
         dx = x - S/2
         dy = y - S/2
         d = Math.sqrt(dx*dx + dy*dy) / (S/2)
-        int = 255 * d*d
-        alpha = 255 * (1 - d*d*d)
-        id.data[i++] = int
-        id.data[i++] = int
-        id.data[i++] = int
-        id.data[i++] = alpha
-    ctx.putImageData(id, 0, 0)
+        pos = 255 * 0.5 * (0.5 - 0.5 * Math.cos(2 * Math.PI * Math.min(d, 1)))
+        neg = 255 * Math.clamp(0, 1, 1 - 2*d)
+        did.data[i+0] = 0
+        did.data[i+1] = 255
+        did.data[i+2] = 0
+        did.data[i+3] = neg
+        bid.data[i+0] = 255
+        bid.data[i+1] = 0
+        bid.data[i+2] = 0
+        bid.data[i+3] = pos
+        i += 4
+    dentCtx.putImageData(did, 0, 0)
+    bumpCtx.putImageData(bid, 0, 0)
 
     @canvas = $("<canvas width='#{GARDEN_WIDTH}' height='#{GARDEN_HEIGHT}'>")[0]
     @ctx = @canvas.getContext('2d')
     @clear()
 
   clear: ->
-    @ctx.fillStyle = '#808080'
+    @ctx.fillStyle = '#000'
     @ctx.globalCompositeOperation = 'source-over'
     @ctx.fillRect(0, 0, @canvas.width, @canvas.height)
     if sandCtx
       sandCtx.clearRect(0, 0, GARDEN_WIDTH, GARDEN_HEIGHT)
 
   dent: (pos) ->
+    @ctx.globalCompositeOperation = 'lighter'
     x = Math.round(pos.x - @dentCanvas.width / 2)
     y = Math.round(pos.y - @dentCanvas.height / 2)
     @ctx.drawImage(@dentCanvas, x, y)
+    @ctx.drawImage(@bumpCanvas, x, y)
     @drawTo(sandCtx, {x: x - 1, y: y - 1, width: @dentCanvas.width + 2, height: @dentCanvas.height + 2})
 
   drawText: (text, x, y) ->
     @ctx.font = "40px 'Short Stack'"
-    @ctx.fillStyle = '#bbb'
+    @ctx.fillStyle = '#f00'
     d = 3
     for [dx, dy] in [[-d, 0], [d, 0], [0, -d], [0, d]]
       @ctx.fillText(text, x + dx, y + dy)
-    @ctx.fillStyle = '#444'
+    @ctx.fillStyle = '#0f0'
     @ctx.fillText(text, x, y)
     @drawTo(sandCtx)
 
@@ -95,29 +106,37 @@ class Sand
     output = ctx.createImageData(rect.width, rect.height)
     index = (x, y) -> 4 * ((rect.width + 2) * y + x)
     i = 0
+    c = index(0, 0)
     l = index(0, 1)
     r = index(2, 1)
     t = index(1, 0)
     b = index(1, 2)
     light = @light
+    posNeg = (pos, neg) -> pos - (neg/255) * (neg + pos)
     for y in [0...rect.height]
       for x in [0...rect.width]
-        dx = 0.5 * (input.data[l] - input.data[r]) / 255
-        dy = 0.5 * (input.data[t] - input.data[b]) / 255
-        if dx != 0 || dy != 0
-          dot = light.x * dx + light.y * dy
-          f = Math.sin(dot)
-          int = if f < 0 then 0 else 255
-          alpha = 2 * 255 * Math.abs(f)
-          output.data[i] = int
-          output.data[i+1] = int
-          output.data[i+2] = int
-          output.data[i+3] = alpha
+        vl = posNeg(input.data[l], input.data[l+1])
+        vr = posNeg(input.data[r], input.data[r+1])
+        vt = posNeg(input.data[t], input.data[t+1])
+        vb = posNeg(input.data[b], input.data[b+1])
+        dc = input.data[c+1]
+        dx = 0.25 * (vl - vr) / 255
+        dy = 0.25 * (vt - vb) / 255
+        dot = light.x * dx + light.y * dy
+        f = Math.clamp(-0.7, 0.7, Math.sin(dot) + 0.2 * (Math.random() - 0.5))
+        int = if f < 0 then 64 else 255
+        alpha = 255 * Math.abs(f)
+        output.data[i] = int
+        output.data[i+1] = int
+        output.data[i+2] = int
+        output.data[i+3] = alpha
+        c += 4
         i += 4
         l += 4
         r += 4
         t += 4
         b += 4
+      c += 8
       l += 8
       r += 8
       t += 8

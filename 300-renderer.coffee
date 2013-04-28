@@ -31,7 +31,7 @@ loadLevel = (level) ->
   $(".rock").remove()
   for rock in level.rocks
     rockDiv = makeRockDiv(rock)
-  #$('#debug').append window.garden.sand.canvas
+  $('#debug').append window.garden.sand.canvas
   updateDom()
 
 renderDebug = ->
