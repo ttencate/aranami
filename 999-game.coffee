@@ -10,7 +10,7 @@ window.localStorage = window.localStorage || {}
 
 levels = [
   -> new Garden(new Rake(20 + RAKE_WIDTH, 300 - RAKE_LENGTH/2, 0.5 * Math.PI),
-                [new Rock(37, 200), new Rock(250, 300), new Rock(550, 600)])
+                [new Rock(37, 200, 30), new Rock(250, 300, 30), new Rock(550, 600, 30)])
   -> new Garden(new Rake(20 + RAKE_WIDTH, 300 - RAKE_LENGTH/2, 0.5 * Math.PI),
                 [])
   ]
