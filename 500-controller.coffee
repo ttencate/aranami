@@ -7,6 +7,7 @@ $(->
     return {x: e.pageX - pagePosition.left, y: e.pageY - pagePosition.top}
 
   beginDrag = (pos) ->
+    window.score = window.score + 1
     rake = garden.rake
     local = rake.toLocal(pos)
     localOrigin = null
