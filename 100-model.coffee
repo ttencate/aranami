@@ -5,7 +5,7 @@ RAKE_WIDTH = 53
 RAKE_TEETH = 12
 HANDLE_SIZE = 300
 MAX_ANGULAR_VELOCITY = 0.002
-DEBUG = true
+DEBUG = false
 
 class Rake
   rotationOrigin: null
@@ -15,7 +15,7 @@ class Rake
     [{x: 1, y: 2}, {x: RAKE_LENGTH - 1, y: 2}]
   ]
 
-  teeth: ({x: 1 + (RAKE_LENGTH - 1) / RAKE_TEETH * i, y: 2} for i in [0...RAKE_TEETH])
+  teeth: ({x: 1 + (RAKE_LENGTH - 1) / (RAKE_TEETH - 1) * i, y: 2} for i in [0...RAKE_TEETH])
 
   # x and y are the top left
   # angle is in radians, 0 is horizontal
@@ -64,24 +64,32 @@ class Sand
 
   clear: ->
     @ctx.fillStyle = '#808080'
+    @ctx.globalCompositeOperation = 'source-over'
     @ctx.fillRect(0, 0, @canvas.width, @canvas.height)
-    @dent({x: 100, y: 100})
 
   dent: (pos) ->
-    @ctx.drawImage(@dentCanvas, pos.x - @dentCanvas.width / 2, pos.y - @dentCanvas.height / 2)
+    x = Math.round(pos.x - @dentCanvas.width / 2)
+    y = Math.round(pos.y - @dentCanvas.height / 2)
+    @ctx.drawImage(@dentCanvas, x, y)
+    @drawTo(sandCtx, {x: x - 1, y: y - 1, width: @dentCanvas.width + 2, height: @dentCanvas.height + 2})
 
-  drawTo: (ctx) ->
-    input = @ctx.getImageData(0, 0, GARDEN_WIDTH, GARDEN_HEIGHT)
-    output = ctx.createImageData(GARDEN_WIDTH, GARDEN_HEIGHT)
-    index = (x, y) -> 4 * (GARDEN_WIDTH * y + x)
-    i = index(1, 1)
+  drawTo: (ctx, rect) ->
+    if !rect then rect = {x: 1, y: 1, width: GARDEN_WIDTH-1, height: GARDEN_HEIGHT-1}
+    rect.x = Math.max(1, rect.x)
+    rect.y = Math.max(1, rect.y)
+    rect.width = Math.min(GARDEN_WIDTH - 1 - rect.x, rect.width)
+    rect.height = Math.min(GARDEN_WIDTH - 1 - rect.y, rect.height)
+    input = @ctx.getImageData(rect.x - 1, rect.y - 1, rect.width + 2, rect.height + 2)
+    output = ctx.createImageData(rect.width, rect.height)
+    index = (x, y) -> 4 * ((rect.width + 2) * y + x)
+    i = 0
     l = index(0, 1)
     r = index(2, 1)
     t = index(1, 0)
     b = index(1, 2)
     light = @light
-    for y in [1...GARDEN_HEIGHT-1]
-      for x in [1...GARDEN_WIDTH-1]
+    for y in [0...rect.height]
+      for x in [0...rect.width]
         dx = 0.5 * (input.data[l] - input.data[r]) / 255
         dy = 0.5 * (input.data[t] - input.data[b]) / 255
         if dx != 0 || dy != 0
@@ -98,12 +106,11 @@ class Sand
         r += 4
         t += 4
         b += 4
-      i += 8
       l += 8
       r += 8
       t += 8
       b += 8
-    ctx.putImageData(output, 0, 0)
+    ctx.putImageData(output, rect.x, rect.y)
 
 class Rock
   x: undefined

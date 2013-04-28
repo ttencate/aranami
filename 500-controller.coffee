@@ -59,7 +59,6 @@ drawDents = ->
   for tooth in rake.teeth
     pos = rake.toGlobal(tooth)
     sand.dent(pos)
-  sand.drawTo(sandCtx)
 
 updateGarden = (dt) ->
   rake = garden.rake

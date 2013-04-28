@@ -83,7 +83,6 @@ $(->
   loadLevel(levels[0]())
   ctx = $('#canvas')[0].getContext('2d')
   sandCtx = $('#sand')[0].getContext('2d')
-  garden.sand.drawTo(sandCtx)
 
   createjs.Sound.registerSound('test.mp3|test.ogg', 'test', 3)
   $('#test-sound').click((e) ->
@@ -98,7 +97,7 @@ $(->
   lastUpdate = Date.now()
   update = ->
     now = Date.now()
-    dt = Math.min(50, now - lastUpdate)
+    dt = Math.min(20, now - lastUpdate)
     lastUpdate = now
 
     updateGarden(dt)
