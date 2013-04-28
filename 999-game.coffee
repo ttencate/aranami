@@ -104,7 +104,7 @@ $(->
 
     if DEBUG
       ctx.setTransform(1, 0, 0, 1, 0, 0)
-      ctx.clearRect(0, 0, 800, 600)
+      ctx.clearRect(0, 0, GARDEN_WIDTH, GARDEN_HEIGHT)
       renderDebug()
 
     window.requestAnimationFrame(update)
