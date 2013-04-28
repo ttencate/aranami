@@ -4,9 +4,21 @@ $rake-thickness: 53px;
 $rake-length: 203px;
 $handle-size: 300px;
 
+body {
+  background-image: url("background.png");
+  background-position: 50% top;
+}
+
+#wrap {
+  position: relative;
+  width: 960px;
+  margin: 0 auto;
+}
+
 .container {
   position: relative;
-  width: 800px;
+  top: 279px;
+  width: 960px;
   height: 600px;
 }
 
