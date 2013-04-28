@@ -62,6 +62,7 @@ $(->
         index = s.indexOf(String.fromCharCode(e.which))
         if index >= 0 && index < rocks.length
           rock = rocks[index].at(50, -50)
+          garden.rocks.push(rock)
           $('.container').append(makeRockDiv(rock))
 )
 
