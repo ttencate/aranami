@@ -9,7 +9,7 @@ $handle-size: 300px;
 
 body {
   background-image: url("background.jpg");
-  background-position: 50% top;
+  background-position: 50% -100px;
   margin: 0;
   font-family: "Poiret One";
 }
@@ -22,9 +22,9 @@ body {
 
 h1 {
   display: block;
-  line-height: 287px;
+  line-height: 137px;
   text-align: center;
-  margin: 0;
+  margin: 0 0 50px;
   font-size: 4em;
   color: white;
   @include text-shadow(2px 2px 5px #000)
