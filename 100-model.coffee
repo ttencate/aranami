@@ -2,6 +2,7 @@ GARDEN_WIDTH = 800
 GARDEN_HEIGHT = 600
 RAKE_LENGTH = 203
 RAKE_WIDTH = 53
+RAKE_TEETH = 12
 HANDLE_SIZE = 300
 MAX_ANGULAR_VELOCITY = 0.002
 DEBUG = true
@@ -13,6 +14,8 @@ class Rake
   segments: [
     [{x: 1, y: 2}, {x: RAKE_LENGTH - 1, y: 2}]
   ]
+
+  teeth: ({x: 1 + (RAKE_LENGTH - 1) / RAKE_TEETH * i, y: 2} for i in [0...RAKE_TEETH])
 
   # x and y are the top left
   # angle is in radians, 0 is horizontal
@@ -37,6 +40,24 @@ class Sand
   light: {x: Math.cos(2/3 * Math.PI), y: -Math.sin(2/3 * Math.PI)}
 
   constructor: ->
+    S = 16
+    @dentCanvas = $("<canvas width='#{S}' height='#{S}'>")[0]
+    ctx = @dentCanvas.getContext('2d')
+    id = ctx.createImageData(S, S)
+    i = 0
+    for y in [0...S]
+      for x in [0...S]
+        dx = x - S/2
+        dy = y - S/2
+        d = Math.sqrt(dx*dx + dy*dy) / (S/2)
+        int = 255 * d*d
+        alpha = 255 * (1 - d*d*d)
+        id.data[i++] = int
+        id.data[i++] = int
+        id.data[i++] = int
+        id.data[i++] = alpha
+    ctx.putImageData(id, 0, 0)
+
     @canvas = $("<canvas width='#{GARDEN_WIDTH}' height='#{GARDEN_HEIGHT}'>")[0]
     @ctx = @canvas.getContext('2d')
     @clear()
@@ -44,11 +65,10 @@ class Sand
   clear: ->
     @ctx.fillStyle = '#808080'
     @ctx.fillRect(0, 0, @canvas.width, @canvas.height)
-    @ctx.beginPath()
-    @ctx.moveTo(100, 100)
-    @ctx.lineTo(200, 100)
-    @ctx.lineWidth = 10
-    @ctx.stroke()
+    @dent({x: 100, y: 100})
+
+  dent: (pos) ->
+    @ctx.drawImage(@dentCanvas, pos.x - @dentCanvas.width / 2, pos.y - @dentCanvas.height / 2)
 
   drawTo: (ctx) ->
     input = @ctx.getImageData(0, 0, GARDEN_WIDTH, GARDEN_HEIGHT)
@@ -68,7 +88,7 @@ class Sand
           dot = light.x * dx + light.y * dy
           f = Math.sin(dot)
           int = if f < 0 then 0 else 255
-          alpha = 255 * Math.abs(f)
+          alpha = 2 * 255 * Math.abs(f)
           output.data[i] = int
           output.data[i+1] = int
           output.data[i+2] = int

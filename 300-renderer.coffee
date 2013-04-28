@@ -10,6 +10,7 @@ loadLevel = (level) ->
   $(".rock").remove()
   for rock in level.rocks
     $(".container").append "<div class='rock " + rock.sprite + "' style='left:" + rock.x + 'px; top:'  + rock.y + "px'></div>"
+  $('#debug').append window.garden.sand.canvas
   updateDom()
 
 renderDebug = ->

@@ -53,6 +53,14 @@ $(->
     e.preventDefault()
 )
 
+drawDents = ->
+  rake = garden.rake
+  sand = garden.sand
+  for tooth in rake.teeth
+    pos = rake.toGlobal(tooth)
+    sand.dent(pos)
+  sand.drawTo(sandCtx)
+
 updateGarden = (dt) ->
   rake = garden.rake
   if rake.rotationOrigin && rake.targetAngle != rake.angle
@@ -104,6 +112,7 @@ updateGarden = (dt) ->
       rake.y = oldY
       rake.angle = oldAngle
     else
+      drawDents()
       if !clamped
         rake.angle = rake.targetAngle
   updateDom()

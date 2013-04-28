@@ -77,6 +77,7 @@ levels = [
   ]
 
 ctx = null
+sandCtx = null
 
 $(->
   loadLevel(levels[0]())
