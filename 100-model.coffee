@@ -31,7 +31,7 @@ class Rake
     }
 
 class Rock
-  constructor: (@x, @y, @radius) ->
+  constructor: (@x, @y, @radius, @sprite) ->
 
 class Garden
   constructor: (@rake, @rocks) ->
