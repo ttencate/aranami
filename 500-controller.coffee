@@ -51,6 +51,18 @@ $(->
     if e.which == 1 && grabAngle != null
       endDrag()
     e.preventDefault()
+
+  if DEBUG
+    $(document).keypress (e) ->
+      if e.which == 96 # backtick
+        garden.dump()
+        e.preventDefault()
+      else
+        s = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ'
+        index = s.indexOf(String.fromCharCode(e.which))
+        if index >= 0 && index < rocks.length
+          rock = rocks[index].at(50, -50)
+          $('.container').append(makeRockDiv(rock))
 )
 
 drawDents = ->

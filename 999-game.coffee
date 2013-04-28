@@ -94,11 +94,6 @@ $(->
     # TODO things
     event.preventDefault()
 
-  if DEBUG
-    $(document).keydown (e) ->
-      if e.keyCode == 68 # d
-        garden.dump()
-
   lastUpdate = Date.now()
   update = ->
     now = Date.now()
