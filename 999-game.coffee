@@ -85,11 +85,24 @@ $(->
   loadLevel(levels[0]())
   ctx = $('#canvas')[0].getContext('2d')
   sandCtx = $('#sand')[0].getContext('2d')
-  window.setTimeout((->
-    garden.sand.drawText("››› DRAG THE RAKE", 60, 390)
-    garden.sand.drawText("TO HERE ›››", 590, 310)
-  ), 500)
 
+  window.WebFontConfig = {
+    custom: {
+      families: [ 'Short Stack' ]
+      urls: [ 'fonts.css' ]
+    }
+    fontactive: ->
+      garden.sand.drawText("\u203a\u203a\u203a DRAG THE RAKE", 60, 390)
+      garden.sand.drawText("TO HERE \u203a\u203a\u203a", 590, 310)
+  }
+  (->
+    wf = document.createElement('script')
+    wf.src = 'http://ajax.googleapis.com/ajax/libs/webfont/1/webfont.js'
+    wf.type = 'text/javascript'
+    wf.async = 'true'
+    s = document.getElementsByTagName('script')[0]
+    s.parentNode.insertBefore(wf, s)
+  )()
 
   createjs.Sound.registerSound('test.mp3|test.ogg', 'test', 3)
   $('#test-sound').click((e) ->

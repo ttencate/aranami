@@ -6,13 +6,6 @@ $rake-thickness: 53px;
 $rake-length: 203px;
 $handle-size: 300px;
 
-@font-face {
-  font-family: 'Short Stack';
-  font-style: normal;
-  font-weight: 400;
-  src: local('Short Stack'), local('ShortStack'), url(shortstack.woff) format('woff');
-}
-
 body {
   background-image: url("background.jpg");
   background-position: 50% top;

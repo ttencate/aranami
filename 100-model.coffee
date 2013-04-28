@@ -76,7 +76,6 @@ class Sand
     @drawTo(sandCtx, {x: x - 1, y: y - 1, width: @dentCanvas.width + 2, height: @dentCanvas.height + 2})
 
   drawText: (text, x, y) ->
-    @ctx.measureText(text)
     @ctx.font = "40px 'Short Stack'"
     @ctx.fillStyle = '#bbb'
     d = 3
