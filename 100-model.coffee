@@ -75,6 +75,17 @@ class Sand
     @ctx.drawImage(@dentCanvas, x, y)
     @drawTo(sandCtx, {x: x - 1, y: y - 1, width: @dentCanvas.width + 2, height: @dentCanvas.height + 2})
 
+  drawText: (text, x, y) ->
+    @ctx.measureText(text)
+    @ctx.font = "40px 'Short Stack'"
+    @ctx.fillStyle = '#bbb'
+    d = 3
+    for [dx, dy] in [[-d, 0], [d, 0], [0, -d], [0, d]]
+      @ctx.fillText(text, x + dx, y + dy)
+    @ctx.fillStyle = '#444'
+    @ctx.fillText(text, x, y)
+    @drawTo(sandCtx)
+
   drawTo: (ctx, rect) ->
     if !rect then rect = {x: 1, y: 1, width: GARDEN_WIDTH-2, height: GARDEN_HEIGHT-2}
     rect.x = Math.max(1, rect.x)
@@ -127,7 +138,7 @@ class Rock
     return rock
 
 class Garden
-  constructor: (@rake, @rocks) ->
+  constructor: (@rake, @rocks, @text) ->
     @sand = new Sand()
 
   dump: ->

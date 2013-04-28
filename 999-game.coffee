@@ -82,9 +82,14 @@ ctx = null
 sandCtx = null
 
 $(->
-  loadLevel(levels[1]())
+  loadLevel(levels[0]())
   ctx = $('#canvas')[0].getContext('2d')
   sandCtx = $('#sand')[0].getContext('2d')
+  window.setTimeout((->
+    garden.sand.drawText("››› DRAG THE RAKE", 60, 390)
+    garden.sand.drawText("TO HERE ›››", 590, 310)
+  ), 500)
+
 
   createjs.Sound.registerSound('test.mp3|test.ogg', 'test', 3)
   $('#test-sound').click((e) ->
