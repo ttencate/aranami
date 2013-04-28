@@ -11,6 +11,12 @@ $handle-size: 300px;
 }
 
 canvas {
+  position: absolute;
+  left: 0;
+  top: 0;
+}
+
+.sand {
   background-color: #eed;
   background-image: url("sand.png");
 }
@@ -24,6 +30,7 @@ canvas {
   // background-color: red;
   background-image: url("hark.png");
   overflow: visible;
+  z-index: 10;
   @include transform-origin(0px, 0px);
 }
 
@@ -33,6 +40,10 @@ canvas {
   margin-top: -40px;
   width: 80px;
   height: 80px;
+}
+
+.debug {
+  position: relative;
 }
 
 .rocks_01 { background-image: url('images/rocks_01.png'); }

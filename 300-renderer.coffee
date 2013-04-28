@@ -9,12 +9,10 @@ loadLevel = (level) ->
   window.garden = level
   $(".rock").remove()
   for rock in level.rocks
-    $(".container").prepend "<div class='rock " + rock.sprite + "' style='left:" + rock.x + 'px; top:'  + rock.y + "px'></div>"
+    $(".container").append "<div class='rock " + rock.sprite + "' style='left:" + rock.x + 'px; top:'  + rock.y + "px'></div>"
   updateDom()
 
 renderDebug = ->
-    ctx.setTransform(1, 0, 0, 1, 0, 0)
-    ctx.clearRect(0,0,800,600)
     ctx.lineWidth = 2
 
     for rock in garden.rocks
