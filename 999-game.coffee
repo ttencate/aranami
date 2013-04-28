@@ -113,4 +113,18 @@ $(->
   window.requestAnimationFrame(update)
 
   updateDom()
+
+  music = $('#music')[0]
+  musicCheckbox = $('#enable-music')
+  music.volume = 0.2
+  setMusic = (enable) ->
+    if enable then music.play() else music.pause()
+    musicCheckbox.prop('checked', enable)
+    localStorage.music = enable.toString()
+  musicCheckbox.click (e) ->
+    console.log e
+    setMusic($(this).is(':checked'))
+  if localStorage.music == undefined
+    localStorage.music = "true"
+  setMusic(localStorage.music == "true")
 )
