@@ -35,6 +35,9 @@ $(->
     grabAngle = angle
 
   endDrag = () ->
+    rake = garden.rake
+    rake.rotationOrigin = null
+    rake.targetAngle = rake.angle
     grabAngle = null
     globalOrigin = null
 
@@ -75,12 +78,16 @@ updateGarden = (dt) ->
       da = m
       clamped = true
 
+    oldX = rake.x
+    oldY = rake.y
+    oldAngle = rake.angle
+
     origin = rake.rotationOrigin
-    newX = rake.x + origin.x * Math.cos(rake.angle) - origin.y * Math.sin(rake.angle)
-    newY = rake.y + origin.x * Math.sin(rake.angle) + origin.y * Math.cos(rake.angle)
-    newAngle = rake.angle + da
-    newX -= origin.x * Math.cos(newAngle) - origin.y * Math.sin(newAngle)
-    newY -= origin.x * Math.sin(newAngle) + origin.y * Math.cos(newAngle)
+    rake.x += origin.x * Math.cos(rake.angle) - origin.y * Math.sin(rake.angle)
+    rake.y += origin.x * Math.sin(rake.angle) + origin.y * Math.cos(rake.angle)
+    rake.angle += da
+    rake.x -= origin.x * Math.cos(rake.angle) - origin.y * Math.sin(rake.angle)
+    rake.y -= origin.x * Math.sin(rake.angle) + origin.y * Math.cos(rake.angle)
 
     collides = false
     for segment in rake.segments
@@ -93,13 +100,18 @@ updateGarden = (dt) ->
           collides = true
           break
         v = {x: q.x - p.x, y: q.y - p.y}
+        t = -(p.x * v.x + p.y * v.y) / ((v.x * v.x + v.y * v.y))
+        u = Math.length({x: p.x + t * v.x, y: p.y + t * v.y})
+        if Math.abs(u) <= rock.radius && t >= 0 && t <= 1
+          collides = true
+          break
+      break if collides
 
-
-    if !collides
-      rake.x = newX
-      rake.y = newY
-      rake.angle = newAngle
-
-    if !clamped
-      rake.angle = rake.targetAngle
+    if collides
+      rake.x = oldX
+      rake.y = oldY
+      rake.angle = oldAngle
+    else
+      if !clamped
+        rake.angle = rake.targetAngle
   updateDom()
