@@ -4,41 +4,43 @@ Math.clamp = (min, max, x) ->
   return x
 
 $(->
-  $('.handle-left')
-    .data('rotation-center', [RAKE_LENGTH - 10, 3])
-    .data('offset', [(RAKE_WIDTH - HANDLE_SIZE) / 2, (RAKE_WIDTH - HANDLE_SIZE) / 2])
-  $('.handle-right')
-    .data('rotation-center', [10, 3])
-    .data('offset', [RAKE_LENGTH - (RAKE_WIDTH - HANDLE_SIZE) / 2 - HANDLE_SIZE, (RAKE_WIDTH - HANDLE_SIZE) / 2])
+  origin = null
+  grabAngle = 0
 
-  MAX_ANGLE_CHANGE = 0.001
-  draggedHandle = null
+  toLocal = (element, e) ->
+    pagePosition = $(element).position()
+    pos = {x: e.pageX - pagePosition.left, y: e.pageY - pagePosition.top}
+    return garden.rake.toLocal(pos.x, pos.y)
 
-  $('.handle').mousedown (e) ->
+  $('.container').mousedown (e) ->
     if e.which != 1 then return
-    draggedHandle = $(this)
-    handleOffset = draggedHandle.data('offset')
-    [x, y] = [e.offsetX + handleOffset[0], e.offsetY + handleOffset[1]]
-    [centerX, centerY] = draggedHandle.data('rotation-center')
-    angle = Math.atan2(y - centerY, x - centerX)
-    draggedHandle.data('grab-angle', angle)
+    local = toLocal(this, e)
+    if local.y > -20 && local.y < RAKE_WIDTH + 20
+      if local.x < RAKE_LENGTH / 2
+        origin = {x: RAKE_LENGTH - 10, y: 3}
+      else
+        origin = {x: 10, y: 3}
+    if origin
+      grabAngle = Math.atan2(local.y - origin.y, local.x - origin.x)
     e.preventDefault()
 
-  $('.handle').mousemove (e) ->
-    if e.which != 1 then return
-    handleOffset = draggedHandle.data('offset')
-    [x, y] = [handleOffset[0] + e.offsetX, handleOffset[1] + e.offsetY]
-    [centerX, centerY] = draggedHandle.data('rotation-center')
-    grabAngle = draggedHandle.data('grab-angle')
-    angle = Math.atan2(y - centerY, x - centerX)
-    da = angle - grabAngle
-    rake = garden.rake
-    rake.x += centerX * Math.cos(rake.angle) - centerY * Math.sin(rake.angle)
-    rake.y += centerX * Math.sin(rake.angle) + centerY * Math.cos(rake.angle)
-    rake.angle += da
-    rake.x -= centerX * Math.cos(rake.angle) - centerY * Math.sin(rake.angle)
-    rake.y -= centerX * Math.sin(rake.angle) + centerY * Math.cos(rake.angle)
-    updateDom()
+  $('.container').mousemove (e) ->
+    if origin and !e.which
+      origin = null
+      return
+    if e.which != 1
+      return
+    if origin
+      local = toLocal(this, e)
+      angle = Math.atan2(local.y - origin.y, local.x - origin.x)
+      da = angle - grabAngle
+      rake = garden.rake
+      rake.x += origin.x * Math.cos(rake.angle) - origin.y * Math.sin(rake.angle)
+      rake.y += origin.x * Math.sin(rake.angle) + origin.y * Math.cos(rake.angle)
+      rake.angle += da
+      rake.x -= origin.x * Math.cos(rake.angle) - origin.y * Math.sin(rake.angle)
+      rake.y -= origin.x * Math.sin(rake.angle) + origin.y * Math.cos(rake.angle)
+      updateDom()
     e.preventDefault()
 
   $(document).mouseup (e) ->

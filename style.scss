@@ -27,31 +27,6 @@ canvas {
   @include transform-origin(0px, 0px);
 }
 
-.handle {
-  width: $handle-size;
-  height: $handle-size;
-  position: absolute;
-  top: ($rake-thickness - $handle-size) / 2;
-  //background-color: rgba(0,0,255,0.5);
-}
-
-.handle:hover {
-  //background-color: rgba(255,255,0,0.5);
-  cursor: pointer;
-}
-
-.handle:active {
-  //background-color: rgba(0,255,0,0.5);
-}
-
-.handle-left {
-  left: ($rake-thickness - $handle-size) / 2;
-}
-
-.handle-right {
-  right: ($rake-thickness - $handle-size) / 2;
-}
-
 .rock {
   position: absolute;
   width: 60px;
