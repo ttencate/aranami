@@ -66,6 +66,8 @@ class Sand
     @ctx.fillStyle = '#808080'
     @ctx.globalCompositeOperation = 'source-over'
     @ctx.fillRect(0, 0, @canvas.width, @canvas.height)
+    if sandCtx
+      sandCtx.clearRect(0, 0, GARDEN_WIDTH, GARDEN_HEIGHT)
 
   dent: (pos) ->
     x = Math.round(pos.x - @dentCanvas.width / 2)

@@ -57,6 +57,12 @@ $(->
       if e.which == 96 # backtick
         garden.dump()
         e.preventDefault()
+      else if e.which == 92 # backslash
+        garden.rake.x = -30 + 20 + RAKE_WIDTH
+        garden.rake.y = 300 - RAKE_LENGTH/2
+        garden.rake.angle = 0.5 * Math.PI
+        updateDom()
+        garden.sand.clear()
       else
         s = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ'
         index = s.indexOf(String.fromCharCode(e.which))
