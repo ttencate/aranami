@@ -9,7 +9,7 @@ class Rake
 
   # List of line segments to use for collisioning
   segments: [
-    [{x: 0, y: 3}, {x: RAKE_LENGTH, y: 3}]
+    [{x: 1, y: 2}, {x: RAKE_LENGTH - 1, y: 2}]
   ]
 
   # x and y are the top left
