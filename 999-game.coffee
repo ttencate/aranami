@@ -43,7 +43,7 @@ $(->
     lastUpdate = now
 
     updateGarden(dt)
-    renderDebug()
+    if DEBUG then renderDebug()
 
     window.requestAnimationFrame(update)
   window.requestAnimationFrame(update)
