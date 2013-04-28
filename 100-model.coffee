@@ -1,5 +1,5 @@
-RAKE_LENGTH = 360
-RAKE_WIDTH = 60
+RAKE_LENGTH = 203
+RAKE_WIDTH = 53
 HANDLE_SIZE = 300
 MAX_ANGULAR_VELOCITY = 0.002
 DEBUG = true
@@ -9,7 +9,7 @@ class Rake
 
   # List of line segments to use for collisioning
   segments: [
-    [{x: 10, y: 3}, {x: RAKE_LENGTH - 10, y: 3}]
+    [{x: 0, y: 3}, {x: RAKE_LENGTH, y: 3}]
   ]
 
   # x and y are the top left
