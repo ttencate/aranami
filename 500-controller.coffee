@@ -3,6 +3,9 @@ Math.clamp = (min, max, x) ->
   if x > max then return max
   return x
 
+Math.length = (v) ->
+  return Math.sqrt(v.x * v.x + v.y * v.y)
+
 $(->
   grabAngle = null
   globalOrigin = null
@@ -57,8 +60,7 @@ $(->
 
 updateGarden = (dt) ->
   rake = garden.rake
-  origin = rake.rotationOrigin
-  if origin && rake.targetAngle != rake.angle
+  if rake.rotationOrigin && rake.targetAngle != rake.angle
     da = rake.targetAngle - rake.angle
     if da < -Math.PI
       da += 2*Math.PI
@@ -72,11 +74,32 @@ updateGarden = (dt) ->
     if da > m
       da = m
       clamped = true
-    rake.x += origin.x * Math.cos(rake.angle) - origin.y * Math.sin(rake.angle)
-    rake.y += origin.x * Math.sin(rake.angle) + origin.y * Math.cos(rake.angle)
-    garden.rake.angle += da
-    rake.x -= origin.x * Math.cos(rake.angle) - origin.y * Math.sin(rake.angle)
-    rake.y -= origin.x * Math.sin(rake.angle) + origin.y * Math.cos(rake.angle)
+
+    origin = rake.rotationOrigin
+    newX = rake.x + origin.x * Math.cos(rake.angle) - origin.y * Math.sin(rake.angle)
+    newY = rake.y + origin.x * Math.sin(rake.angle) + origin.y * Math.cos(rake.angle)
+    newAngle = rake.angle + da
+    newX -= origin.x * Math.cos(newAngle) - origin.y * Math.sin(newAngle)
+    newY -= origin.x * Math.sin(newAngle) + origin.y * Math.cos(newAngle)
+
+    collides = false
+    for segment in rake.segments
+      a = rake.toGlobal(segment[0])
+      b = rake.toGlobal(segment[1])
+      for rock in garden.rocks
+        p = {x: a.x - rock.x, y: a.y - rock.y}
+        q = {x: b.x - rock.x, y: b.y - rock.y}
+        if Math.length(p) <= rock.radius || Math.length(q) <= rock.radius
+          collides = true
+          break
+        v = {x: q.x - p.x, y: q.y - p.y}
+
+
+    if !collides
+      rake.x = newX
+      rake.y = newY
+      rake.angle = newAngle
+
     if !clamped
       rake.angle = rake.targetAngle
   updateDom()

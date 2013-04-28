@@ -6,6 +6,11 @@ MAX_ANGULAR_VELOCITY = 0.002
 class Rake
   rotationOrigin: null
 
+  # List of line segments to use for collisioning
+  segments: [
+    [{x: 10, y: 3}, {x: RAKE_LENGTH - 10, y: 3}]
+  ]
+
   # x and y are the top left
   # angle is in radians, 0 is horizontal
   constructor: (@x, @y, @angle) ->
