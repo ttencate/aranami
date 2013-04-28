@@ -32,7 +32,16 @@ class Rake
     }
 
 class Rock
-  constructor: (@x, @y, @radius, @sprite) ->
+  x: undefined
+  y: undefined
+
+  constructor: (@radius, @sprite) ->
+
+  at: (x, y) ->
+    rock = new Rock(@radius, @sprite)
+    rock.x = x
+    rock.y = y
+    return rock
 
 class Garden
   constructor: (@rake, @rocks) ->
