@@ -1,6 +1,7 @@
 @import "compass/css3/transform";
 @import "compass/css3/box-shadow";
 @import "compass/css3/border-radius";
+@import "compass/css3/text-shadow";
 
 $rake-thickness: 53px;
 $rake-length: 203px;
@@ -16,6 +17,7 @@ $handle-size: 300px;
 body {
   background-image: url("background.jpg");
   background-position: 50% top;
+  margin: 0;
   font-family: "Poiret One";
 }
 
@@ -25,11 +27,27 @@ body {
   margin: 0 auto;
 }
 
+h1 {
+  display: block;
+  line-height: 287px;
+  text-align: center;
+  margin: 0;
+  font-size: 4em;
+  color: white;
+  @include text-shadow(2px 2px 5px #000)
+}
+
+p {
+  background: rgba(255,255,255,0.6);
+  padding: 20px;
+  margin: 0;
+}
+
 .container {
   position: relative;
-  top: 279px;
   width: 960px;
   height: 600px;
+  margin-bottom: 50px;
 }
 
 canvas {
