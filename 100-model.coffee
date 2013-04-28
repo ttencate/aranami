@@ -128,3 +128,14 @@ class Garden
   constructor: (@rake, @rocks) ->
     @sand = new Sand()
 
+  dump: ->
+    lines = []
+    lines.push "-> new Garden(new Rake(-30 + 20 + RAKE_WIDTH, 300 - RAKE_LENGTH/2, 0.5 * Math.PI),"
+    lines.push '['
+    for rock in @rocks
+      if rock.x > 0 && rock.y > 0
+        index = (i for i in [0...rocks.length] when rocks[i].sprite == rock.sprite)[0]
+        lines.push "rocks[#{index}].at(#{rock.x}, #{rock.y}),"
+    lines.push ']'
+    console.log lines.join(' ')
+
