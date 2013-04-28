@@ -31,7 +31,7 @@ generate '.wav', '.wav.base64' do |from, to|
 end
 
 generate '.wav', '.mp3' do |from, to|
-  sh "lame -b 192 #{from} #{to}"
+  sh "lame -b 128 #{from} #{to}"
 end
 
 generate '.wav', '.ogg' do |from, to|

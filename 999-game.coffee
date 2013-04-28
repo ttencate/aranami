@@ -139,7 +139,7 @@ $(->
 
   music = $('#music')[0]
   musicCheckbox = $('#enable-music')
-  music.volume = 0.2
+  music.volume = 0.3
   setMusic = (enable) ->
     if enable then music.play() else music.pause()
     musicCheckbox.prop('checked', enable)
