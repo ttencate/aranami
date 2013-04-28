@@ -88,10 +88,14 @@ updateGarden = (dt) ->
     rake.x -= origin.x * Math.cos(rake.angle) - origin.y * Math.sin(rake.angle)
     rake.y -= origin.x * Math.sin(rake.angle) + origin.y * Math.cos(rake.angle)
 
+    inSand = (pos) -> pos.x >= 0 && pos.y >= 0 && pos.x <= GARDEN_WIDTH && pos.y <= GARDEN_HEIGHT
+
     collides = false
     for segment in rake.segments
       a = rake.toGlobal(segment[0])
       b = rake.toGlobal(segment[1])
+      if !inSand(a) || !inSand(b) then collides = true
+      break if collides
       for rock in garden.rocks
         p = {x: a.x - rock.x, y: a.y - rock.y}
         q = {x: b.x - rock.x, y: b.y - rock.y}
