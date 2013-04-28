@@ -2,12 +2,17 @@ $(->
   grabAngle = null
   globalOrigin = null
 
+  incrementScore = ->
+    window.score = window.score + 1
+    garden.sand.drawText('|', (20*window.score) - 10, 45)
+
+
   toPos = (element, e) ->
     pagePosition = $(element).offset()
     return {x: e.pageX - pagePosition.left, y: e.pageY - pagePosition.top}
 
   beginDrag = (pos) ->
-    window.score = window.score + 1
+    incrementScore()
     rake = garden.rake
     local = rake.toLocal(pos)
     localOrigin = null
