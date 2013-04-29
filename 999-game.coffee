@@ -79,6 +79,7 @@ setStars = (i, stars) -> localStorage["stars#{i}"] = stars
 isUnlocked = (i) -> i <= 0 || !isNaN(getStars(i-1))
 
 loadLevel = (i) ->
+  $('#won').fadeOut(1000)
   level = levels[i]()
   currentLevelIndex = i
   window.garden = level
@@ -182,4 +183,12 @@ $(->
     setMusic(!getMusic())
     e.preventDefault()
   setMusic(getMusic())
+
+  $('#won .retry').click (e) ->
+    loadLevel(currentLevelIndex)
+    e.preventDefault()
+  $('#won .next').click (e) ->
+    if currentLevelIndex + 1 < levels.length
+      loadLevel(currentLevelIndex + 1)
+    e.preventDefault()
 )

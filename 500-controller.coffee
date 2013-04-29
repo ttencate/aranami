@@ -91,7 +91,14 @@ win = ->
   stars = Math.clamp(0, 3, 3 - (garden.score - garden.par))
   currentStars = getStars(currentLevelIndex)
 
-  $('#won').show()
+  $('.star').removeClass('visible')
+  $('#won .level').html("#{currentLevelIndex+1}")
+  $('#won .moves').html(garden.score)
+  $('#won .par').html(garden.par)
+  $('#won').fadeIn(1000)
+  $('#won .next').toggle(currentLevelIndex + 1 < levels.length)
+  for i in [0...stars]
+    $(".star#{i+1}").addClass('visible')
 
   if isNaN(currentStars) || stars > currentStars
     setStars(currentLevelIndex, stars)

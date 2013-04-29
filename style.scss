@@ -1,4 +1,5 @@
 @import "compass/css3/transform";
+@import "compass/css3/transition";
 @import "compass/css3/box-shadow";
 @import "compass/css3/border-radius";
 @import "compass/css3/text-shadow";
@@ -31,13 +32,7 @@ h1 {
   @include text-shadow(2px 2px 5px #000);
 }
 
-h2 {
-  font-weight: normal;
-  font-size: 48px;
-  color: white;
-}
-
-p {
+.footer {
   background: rgba(255,255,255,0.6);
   padding: 20px;
   margin: 0;
@@ -92,6 +87,7 @@ p {
 }
 
 .main {
+  margin-left: -1px;
   position: relative;
   left: 0;
   top: 0;
@@ -116,7 +112,6 @@ canvas {
   position: absolute;
   left: 0;
   top: 0;
-  // background-color: red;
   background-image: url("houtenhark.png");
   z-index: 10;
   @include transform-origin(0px, 0px);
@@ -148,6 +143,71 @@ canvas {
   width: 960px;
   height: 600px;
   z-index: 1000;
+  color: white;
+  @include text-shadow(5px 5px 10px rgba(0,0,0,0.5), 2px 2px 4px rgba(0,0,0,0.2));
+  background-color: rgba(0,0,0,0.2);
+}
+
+#won p {
+  font-size: 32px;
+  text-align: center;
+  margin: 1em 0;
+}
+
+#won h2 {
+  font-weight: normal;
+  font-size: 48px;
+  text-align: center;
+  margin: 30px 0 0;
+}
+
+.stars {
+  margin: 0;
+  padding: 0;
+  list-style-type: none;
+  text-align: center;
+  font-size: 192px;
+}
+
+.stars li {
+  display: inline-block;
+  vertical-align: top;
+  position: relative;
+  width: 0.65em;
+  margin: 0;
+  padding: 0;
+}
+
+.star {
+  position: absolute;
+  left: 0;
+  top: 0;
+  @include text-shadow(10px 10px 20px rgba(0,0,0,0.5));
+}
+
+.star-filled {
+  opacity: 0;
+}
+
+.star1 { @include transition(opacity 1s linear 1s); }
+.star2 { @include transition(opacity 1s linear 2s); }
+.star3 { @include transition(opacity 1s linear 3s); }
+
+.star-filled.visible {
+  opacity: 1;
+}
+
+#won a {
+  display: block;
+  font-size: 32px;
+  text-align: center;
+  padding: 0.5em 0;
+  margin: 0;
+  color: white;
+  text-decoration: none;
+  &:hover {
+    @include text-shadow(0px 0px 3px #fff, 5px 5px 10px rgba(0,0,0,0.5), 2px 2px 4px rgba(0,0,0,0.2));
+  }
 }
 
 #debug {

@@ -30,7 +30,16 @@
           <div class="target" style="top: 125px; left: 855px"></div>
         </div>
         <div id="won">
-          <h2>win</h2>
+          <h2>Solved level <span class="level"></span></h2>
+          <p>Moves: <span class="moves"></span></p>
+          <p>Par: <span class="par"></span></p>
+          <ul class="stars">
+            <li><span class="star star-empty">&#x2606;</span><span class="star star-filled star1">&#x2605;</span></li>
+            <li><span class="star star-empty">&#x2606;</span><span class="star star-filled star2">&#x2605;</span></li>
+            <li><span class="star star-empty">&#x2606;</span><span class="star star-filled star3">&#x2605;</span></li>
+          </ul>
+          <a class="retry" href="#">&#8635; Retry</a>
+          <a class="next" href="#">&#8594; Next</a>
         </div>
       </div>
       <ul class="tiles tiles-horizontal">
@@ -44,7 +53,7 @@
         <li><a id="levellink7"></a></li>
       </ul>
       <div id="debug"></div>
-      <p><a href="composition/index.html">Composition No. 10 (unfinished bonus game)</a></p>
+      <p class="footer"><a href="composition/index.html">Composition No. 10 (unfinished bonus game)</a></p>
     </div>
     <audio id="music" loop="true">
       <source src="ZingZen.mp3">
