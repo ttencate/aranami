@@ -92,8 +92,8 @@ loadLevel = (i) ->
   #$('#debug').append window.garden.sand.canvas
   $('#par').html level.par
   updateDom()
-  garden.sand.drawPlank()
   garden.sand.drawRocks(garden.rocks)
+  garden.sand.drawPlank()
   dents = []
   for tooth in garden.rake.teeth
     tooth = garden.rake.toGlobal(tooth)
