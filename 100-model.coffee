@@ -122,6 +122,7 @@ class Sand
       for [w, c] in [[15, '#ccc'], [13, '#fff'], [11, '#ccc'], [9, '#888'], [7, '#444'], [5, '#000']]
         for i in [0...4]
           r = rock.radius - 18 + 12*i
+          continue if r < 1
           @ctx.lineWidth = w
           @ctx.strokeStyle = c
           @ctx.beginPath()
