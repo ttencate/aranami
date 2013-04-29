@@ -84,7 +84,7 @@ $(->
       urls: [ 'fonts.css' ]
     }
     fontactive: ->
-      garden.sand.drawText("\u203a\u203a\u203a DRAG THE RAKE", 160, 210)
+      garden.sand.drawText("\u203a\u203a\u203a DRAG THE RAKE", 170, 212)
       garden.sand.drawText("TO HERE \u203a\u203a\u203a", 590, 310)
   }
   (->

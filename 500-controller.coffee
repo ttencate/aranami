@@ -102,20 +102,16 @@ checkWin = ->
 
 updateGarden = (dt) ->
   rake = garden.rake
-  if rake.rotationOrigin && rake.targetAngle != rake.angle
+  if rake.rotationOrigin && Math.abs(rake.targetAngle - rake.angle) >= ANGULAR_STEP
     da = rake.targetAngle - rake.angle
     if da < -Math.PI
       da += 2*Math.PI
     if da > Math.PI
       da -= 2*Math.PI
-    m = MAX_ANGULAR_VELOCITY * dt
-    clamped = false
-    if da < -m
-      da = -m
-      clamped = true
-    if da > m
-      da = m
-      clamped = true
+    if da < 0
+      da = -ANGULAR_STEP
+    else
+      da = ANGULAR_STEP
 
     oldX = rake.x
     oldY = rake.y
@@ -155,8 +151,6 @@ updateGarden = (dt) ->
       rake.y = oldY
       rake.angle = oldAngle
     else
-      if !clamped
-        rake.angle = rake.targetAngle
       drawDents()
       updateDom()
       checkWin()

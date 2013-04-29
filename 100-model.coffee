@@ -17,7 +17,7 @@ RAKE_START_X = 20
 RAKE_START_Y = GARDEN_HEIGHT / 2
 RAKE_START_ANGLE = -1/4 * Math.PI
 HANDLE_SIZE = 300
-MAX_ANGULAR_VELOCITY = 0.002
+ANGULAR_STEP = 2*Math.PI / 360
 DEBUG = false#window.location.hostname == 'localhost'
 
 class Rake
