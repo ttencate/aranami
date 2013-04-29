@@ -9,7 +9,7 @@ RAKE_Q = RAKE_P + 141
 RAKE_LENGTH = 203
 RAKE_WIDTH = 53
 
-# Teeth per side
+RAKE_TOOTH_START = 11
 RAKE_TOOTH_STEP = 26
 RAKE_TEETH = 6
 
@@ -36,8 +36,8 @@ class Rake
     if @y == undefined then @y = RAKE_START_Y
     if @angle == undefined then @angle = RAKE_START_ANGLE
     @targetAngle = @angle
-    @teeth = ({x: RAKE_TOOTH_STEP / 2 + RAKE_TOOTH_STEP * i, y: RAKE_P} for i in [0...RAKE_TEETH])
-    @teeth = @teeth.concat({x: RAKE_P, y: RAKE_TOOTH_STEP / 2 + RAKE_TOOTH_STEP * i} for i in [0...RAKE_TEETH])
+    @teeth = ({x: RAKE_P + RAKE_TOOTH_START + RAKE_TOOTH_STEP * i, y: RAKE_P} for i in [0...RAKE_TEETH])
+    @teeth = @teeth.concat({x: RAKE_P, y: RAKE_P + RAKE_TOOTH_START + RAKE_TOOTH_STEP * i} for i in [0...RAKE_TEETH])
 
   toLocal: (pos) ->
     dx = pos.x - @x
@@ -141,7 +141,8 @@ class Sand
         dx = 0.25 * (vl - vr) / 255
         dy = 0.25 * (vt - vb) / 255
         dot = light.x * dx + light.y * dy
-        f = Math.clamp(-0.7, 0.7, Math.sin(dot) + 0.2 * (Math.random() - 0.5))
+        random = Math.abs(Math.sin(dot * 78.233 + x * 12.9898 + y * 23.957) * 43758.5453) % 1.0
+        f = Math.clamp(-0.7, 0.7, Math.sin(dot) + 0.2 * (random - 0.5))
         int = if f < 0 then 64 else 255
         alpha = 255 * Math.abs(f)
         output.data[i] = int
