@@ -4,7 +4,7 @@ $(->
 
   incrementScore = ->
     garden.score = garden.score + 1
-    garden.sand.drawText('|', (15*garden.score) - 10, 45)
+    garden.sand.drawPoint(garden.score)
 
   toPos = (e) ->
     pagePosition = $('#container').offset()
