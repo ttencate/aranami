@@ -92,13 +92,15 @@ loadLevel = (i) ->
   #$('#debug').append window.garden.sand.canvas
   $('#par').html level.par
   updateDom()
-  garden.sand.drawTo(sandCtx)
+  garden.sand.drawPlank()
+  garden.sand.drawRocks(garden.rocks)
   dents = []
   for tooth in garden.rake.teeth
     tooth = garden.rake.toGlobal(tooth)
     dents.push({x: tooth.x, y: tooth.y, angle: 0})
     dents.push({x: tooth.x, y: tooth.y, angle: Math.PI})
   garden.sand.drawDents(dents)
+  garden.sand.drawTo(sandCtx)
   if i == 0
     drawInstructions()
   updateLevelLinks()

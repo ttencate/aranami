@@ -117,6 +117,30 @@ class Sand
     endTimer()
     endTimer()
 
+  drawRocks: (rocks) ->
+    for rock in rocks
+      for [w, c] in [[15, '#ccc'], [13, '#fff'], [11, '#ccc'], [9, '#888'], [7, '#444'], [5, '#000']]
+        for i in [0...4]
+          r = rock.radius - 18 + 12*i
+          @ctx.lineWidth = w
+          @ctx.strokeStyle = c
+          @ctx.beginPath()
+          @ctx.arc(rock.x, rock.y, r, 0, 2*Math.PI, false)
+          @ctx.stroke()
+
+  drawPlank: ->
+    x = 855 + 2
+    y = 125 + 2
+    w = 100 - 4
+    h = 350 - 6
+    @ctx.lineJoin = 'round'
+    for [l, c] in [[15, '#aaa'], [13, '#ccc'], [11, '#ccc'], [9, '#888'], [7, '#444'], [5, '#000']]
+      @ctx.lineWidth = l
+      @ctx.strokeStyle = c
+      @ctx.strokeRect(x, y, w, h)
+    @ctx.fillStyle = '#000'
+    @ctx.fillRect(x, y, w, h)
+
   drawText: (text, x, y, size, redraw) ->
     redraw = true if redraw == undefined
     onFontLoaded =>
