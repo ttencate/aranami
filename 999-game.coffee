@@ -105,14 +105,21 @@ updateLevelLink = (link, i) ->
   link.html("#{stars} Level #{i+1}")
   link.css('visibility', if isUnlocked(i) then 'visible' else 'hidden')
   link.toggleClass('current', i == currentLevelIndex)
-  link.click (e) ->
-    loadLevel(i)
-    e.preventDefault()
 
 updateLevelLinks = ->
   for i in [0...levels.length]
     link = $("#levellink#{i}")
     updateLevelLink(link, i)
+
+makeLevelLink = (link, i) ->
+  link.click (e) ->
+    loadLevel(i)
+    e.preventDefault()
+
+makeLevelLinks = ->
+  for i in [0...levels.length]
+    link = $("#levellink#{i}")
+    makeLevelLink(link, i)
 
 drawInstructions = ->
   window.WebFontConfig = {
@@ -134,13 +141,12 @@ drawInstructions = ->
   )()
 
 $(->
-
   match = /^#level(\d+)$/.exec(window.location.hash)
   if match
     currentLevelIndex = parseInt(match[1]) - 1
     if currentLevelIndex < 0 || currentLevelIndex >= levels.length
       currentLevelIndex = 0
-  updateLevelLinks()
+  makeLevelLinks()
 
   ctx = $('#canvas')[0].getContext('2d')
   sandCtx = $('#sand')[0].getContext('2d')
