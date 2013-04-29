@@ -18,7 +18,7 @@ RAKE_START_Y = GARDEN_HEIGHT / 2
 RAKE_START_ANGLE = -1/4 * Math.PI
 HANDLE_SIZE = 300
 ANGULAR_STEP = 2*Math.PI / 360
-DEBUG = false#window.location.hostname == 'localhost'
+DEBUG = window.location.hostname == 'localhost'
 
 class Rake
   rotationOrigin: null
