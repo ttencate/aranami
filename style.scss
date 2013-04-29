@@ -26,9 +26,15 @@ h1 {
   line-height: 137px;
   text-align: center;
   margin: 0;
-  font-size: 4em;
+  font-size: 72px;
   color: white;
   @include text-shadow(2px 2px 5px #000);
+}
+
+h2 {
+  font-weight: normal;
+  font-size: 48px;
+  color: white;
 }
 
 p {
@@ -78,7 +84,17 @@ p {
 }
 
 .container {
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 960px;
+  height: 600px;
+}
+
+.main {
   position: relative;
+  left: 0;
+  top: 0;
   width: 960px;
   height: 600px;
 }
@@ -122,6 +138,16 @@ canvas {
   background-repeat: no-repeat;
   @include box-shadow(1px 2px 8px #333);
   @include border-radius(3px, 3px);
+}
+
+#won {
+  display: none;
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 960px;
+  height: 600px;
+  z-index: 1000;
 }
 
 #debug {

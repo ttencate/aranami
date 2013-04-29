@@ -78,6 +78,19 @@ getStars = (i) -> parseInt(localStorage["stars#{i}"]) # NaN if not yet finished
 setStars = (i, stars) -> localStorage["stars#{i}"] = stars
 isUnlocked = (i) -> i <= 0 || !isNaN(getStars(i-1))
 
+loadLevel = (i) ->
+  level = levels[i]()
+  currentLevelIndex = i
+  window.garden = level
+  $(".rock").remove()
+  for rock in level.rocks
+    rockDiv = makeRockDiv(rock)
+  #$('#debug').append window.garden.sand.canvas
+  updateDom()
+  garden.sand.drawTo(sandCtx)
+  if i == 0
+    drawInstructions()
+
 updateLevelLink = (link, i) ->
   link.attr('href', "#level#{i+1}")
   numStars = getStars(i)
@@ -89,11 +102,12 @@ updateLevelLink = (link, i) ->
   link.css('visibility', if isUnlocked(i) then 'visible' else 'hidden')
   link.click (e) ->
     window.location.hash = "#level#{i+1}"
+    loadLevel(i)
     e.preventDefault()
 
 updateLevelLinks = ->
   for i in [0...levels.length]
-    link = $("#level#{i}")
+    link = $("#levellink#{i}")
     updateLevelLink(link, i)
 
 drawInstructions = ->
@@ -126,9 +140,7 @@ $(->
 
   ctx = $('#canvas')[0].getContext('2d')
   sandCtx = $('#sand')[0].getContext('2d')
-  loadLevel(levels[currentLevelIndex]())
-  if currentLevelIndex == 0
-    drawInstructions()
+  loadLevel(currentLevelIndex)
 
   createjs.Sound.registerSound('test.mp3|test.ogg', 'test', 3)
   $('#test-sound').click((e) ->
@@ -153,6 +165,10 @@ $(->
   window.requestAnimationFrame(update)
 
   updateDom()
+
+  $('#restart').click (e) ->
+    loadLevel(currentLevelIndex)
+    e.preventDefault()
 
   music = $('#music')[0]
   musicLink = $('#enable-music')

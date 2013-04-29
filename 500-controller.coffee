@@ -62,6 +62,8 @@ $(->
       if e.which == 96 # backtick
         garden.dump()
         e.preventDefault()
+      else if e.which == 42 # asterisk
+        win()
       else if e.which == 92 # backslash
         garden.rake.x = RAKE_START_X
         garden.rake.y = RAKE_START_Y
@@ -88,6 +90,9 @@ drawDents = ->
 win = ->
   stars = Math.clamp(0, 3, 3 - (garden.score - garden.par))
   currentStars = getStars(currentLevelIndex)
+
+  $('#won').show()
+
   if isNaN(currentStars) || stars > currentStars
     setStars(currentLevelIndex, stars)
     updateLevelLinks()
