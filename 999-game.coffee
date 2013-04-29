@@ -71,12 +71,23 @@ currentLevelIndex = 0
 ctx = null
 sandCtx = null
 
+updateLevelLink = (link, i) ->
+  link.attr('href', "#level#{i+1}")
+  stars = "\u2605\u2606\u2606"
+  link.html("#{stars} Level #{i+1}")
+
+updateLevelLinks = ->
+  for i in [0...levels.length]
+    link = $("#level#{i}")
+    updateLevelLink(link, i)
+
 $(->
   match = /^#level(\d+)$/.exec(window.location.hash)
   if match
     currentLevelIndex = parseInt(match[1]) - 1
     if currentLevelIndex < 0 || currentLevelIndex >= levels.length
       currentLevelIndex = 0
+  updateLevelLinks()
 
   loadLevel(levels[currentLevelIndex]())
   ctx = $('#canvas')[0].getContext('2d')

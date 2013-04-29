@@ -67,6 +67,15 @@ p {
   width: 960px;
 }
 
+.tiles a {
+  color: #fff;
+  text-decoration: none;
+}
+
+.tiles a:hover {
+  @include text-shadow(0px 0px 3px #fff, 0px 0px 7px #000);
+}
+
 .container {
   position: relative;
   width: 960px;
