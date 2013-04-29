@@ -123,25 +123,39 @@ makeLevelLinks = ->
     makeLevelLink(link, i)
 
 drawInstructions = ->
-  window.WebFontConfig = {
-    custom: {
-      families: [ 'Short Stack' ]
-      urls: [ 'fonts.css' ]
-    }
-    fontactive: ->
-      garden.sand.drawText("\u203a\u203a\u203a DRAG THE RAKE", 170, 212)
-      garden.sand.drawText("TO HERE \u203a\u203a\u203a", 590, 310)
+  garden.sand.drawText("\u203a\u203a\u203a DRAG THE RAKE", 170, 212)
+  garden.sand.drawText("TO HERE \u203a\u203a\u203a", 590, 310)
+
+fontLoaded = false
+fontLoadedHandlers = []
+
+onFontLoaded = (func) ->
+  if fontLoaded
+    func()
+  else
+    fontLoadedHandlers.push(func)
+
+window.WebFontConfig = {
+  custom: {
+    families: [ 'Short Stack' ]
+    urls: [ 'fonts.css' ]
   }
-  (->
-    wf = document.createElement('script')
-    wf.src = 'http://ajax.googleapis.com/ajax/libs/webfont/1/webfont.js'
-    wf.type = 'text/javascript'
-    wf.async = 'true'
-    s = document.getElementsByTagName('script')[0]
-    s.parentNode.insertBefore(wf, s)
-  )()
+  fontactive: ->
+    fontLoaded = true
+    for handler in fontLoadedHandlers
+      handler()
+}
+(->
+  wf = document.createElement('script')
+  wf.src = 'http://ajax.googleapis.com/ajax/libs/webfont/1/webfont.js'
+  wf.type = 'text/javascript'
+  wf.async = 'true'
+  s = document.getElementsByTagName('script')[0]
+  s.parentNode.insertBefore(wf, s)
+)()
 
 $(->
+
   match = /^#level(\d+)$/.exec(window.location.hash)
   if match
     currentLevelIndex = parseInt(match[1]) - 1

@@ -104,53 +104,29 @@ class Sand
     @drawTo(sandCtx, {x: x - 1, y: y - 1, width: @dentCanvas.width + 2, height: @dentCanvas.height + 2})
 
   drawText: (text, x, y, size) ->
-    size = size || 40
-    @ctx.font = "#{size}px 'Short Stack'"
-    @ctx.fillStyle = '#f00'
-    d = 3
-    for [dx, dy] in [[-d, 0], [d, 0], [0, -d], [0, d]]
-      @ctx.fillText(text, x + dx, y + dy)
-    @ctx.fillStyle = '#0f0'
-    @ctx.fillText(text, x, y)
-    @drawTo(sandCtx)
-
-  drawLine: (from, to) ->
-    narrow = 5
-    wide = narrow + 2*3
-    @ctx.lineCap = 'round'
-
-    @ctx.lineWidth = wide
-    @ctx.strokeStyle = '#f00'
-    @ctx.beginPath()
-    @ctx.moveTo(from.x, from.y)
-    @ctx.lineTo(to.x, to.y)
-    @ctx.stroke()
-
-    @ctx.lineWidth = narrow
-    @ctx.strokeStyle = '#0f0'
-    @ctx.beginPath()
-    @ctx.moveTo(from.x, from.y)
-    @ctx.lineTo(to.x, to.y)
-    @ctx.stroke()
-
-    @drawTo(sandCtx, {
-      x: Math.min(from.x, to.x) - wide - 1,
-      y: Math.min(from.y, to.y) - wide - 1,
-      width: Math.abs(from.x - to.x) + 2*wide + 2,
-      height: Math.abs(from.y - to.y) + 2*wide + 2,
-    })
+    onFontLoaded =>
+      size = size || 40
+      @ctx.font = "#{size}px 'Short Stack'"
+      @ctx.fillStyle = '#f00'
+      d = 3
+      for [dx, dy] in [[-d, 0], [d, 0], [0, -d], [0, d]]
+        @ctx.fillText(text, x + dx, y + dy)
+      @ctx.fillStyle = '#0f0'
+      @ctx.fillText(text, x, y)
+      @drawTo(sandCtx)
 
   drawPoint: (point) ->
-    @ctx.save()
-    @ctx.translate(-10 + 15 * point, 45)
-    if point % 5 == 0
-      @ctx.translate(-60, -10)
-      @ctx.rotate(0.35 * Math.PI)
-      @ctx.scale(0.8, 1.8)
-    @ctx.translate(2 * (Math.random() - 0.5), 2 * (Math.random() - 0.5))
-    @ctx.scale(1, 1 + 0.1 * (Math.random() - 0.5))
-    @drawText('1', 0, 0, 50)
-    @ctx.restore()
+    onFontLoaded =>
+      @ctx.save()
+      @ctx.translate(-10 + 15 * point, 45)
+      if point % 5 == 0
+        @ctx.translate(-60, -10)
+        @ctx.rotate(0.35 * Math.PI)
+        @ctx.scale(0.8, 1.8)
+      @ctx.translate(2 * (Math.random() - 0.5), 2 * (Math.random() - 0.5))
+      @ctx.scale(1, 1 + 0.1 * (Math.random() - 0.5))
+      @drawText('1', 0, 0, 50)
+      @ctx.restore()
 
   drawTo: (ctx, rect) ->
     if !rect then rect = {x: 1, y: 1, width: GARDEN_WIDTH-2, height: GARDEN_HEIGHT-2}
