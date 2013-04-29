@@ -90,6 +90,7 @@ loadLevel = (i) ->
   for rock in level.rocks
     rockDiv = makeRockDiv(rock)
   #$('#debug').append window.garden.sand.canvas
+  $('#par').html level.par
   updateDom()
   garden.sand.drawTo(sandCtx)
   if i == 0
