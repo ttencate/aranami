@@ -129,6 +129,7 @@ updateGarden = (dt) ->
     rake.x += origin.x * Math.cos(rake.angle) - origin.y * Math.sin(rake.angle)
     rake.y += origin.x * Math.sin(rake.angle) + origin.y * Math.cos(rake.angle)
     rake.angle += da
+    rake.angle = Math.canonicalAngle(rake.angle)
     rake.x -= origin.x * Math.cos(rake.angle) - origin.y * Math.sin(rake.angle)
     rake.y -= origin.x * Math.sin(rake.angle) + origin.y * Math.cos(rake.angle)
 
