@@ -66,6 +66,7 @@ levels = [
   -> new Garden(new Rake(), [ rocks[0].at(343, 418), rocks[1].at(606, 316), rocks[4].at(466, 502), ], 4),
   -> new Garden(new Rake(), [ rocks[2].at(562, 209), rocks[3].at(345, 424), rocks[5].at(824, 367), rocks[6].at(620, 505), ], 5),
   -> new Garden(new Rake(), [ rocks[4].at(277, 194), rocks[19].at(467, 139), rocks[8].at(608, 379), rocks[1].at(269, 470), rocks[13].at(652, 174), ], 4),
+  -> new Garden(new Rake(), [ rocks[6].at(160, 298), rocks[13].at(479, 211), rocks[17].at(304, 389), rocks[28].at(819, 51), rocks[11].at(728, 316), ], 5),
   -> new Garden(new Rake(), [ rocks[5].at(264, 200), rocks[12].at(237, 399), rocks[13].at(529, 239), rocks[8].at(206, 162), rocks[14].at(455, 449), rocks[23].at(525, 138), rocks[21].at(758, 293), rocks[24].at(720, 479), rocks[15].at(47, 38), rocks[33].at(99, 54), rocks[28].at(207, 457), rocks[44].at(267, 505), ], 8),
 ]
 currentLevelIndex = 0
