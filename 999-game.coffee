@@ -91,10 +91,9 @@ $(->
       currentLevelIndex = 0
   updateLevelLinks()
 
-  loadLevel(levels[currentLevelIndex]())
   ctx = $('#canvas')[0].getContext('2d')
   sandCtx = $('#sand')[0].getContext('2d')
-  garden.sand.drawTo(sandCtx)
+  loadLevel(levels[currentLevelIndex]())
 
   window.WebFontConfig = {
     custom: {

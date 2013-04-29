@@ -34,6 +34,7 @@ loadLevel = (level) ->
     rockDiv = makeRockDiv(rock)
   #$('#debug').append window.garden.sand.canvas
   updateDom()
+  garden.sand.drawTo(sandCtx)
 
 renderDebug = ->
   ctx.lineWidth = 2

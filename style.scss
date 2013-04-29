@@ -74,6 +74,7 @@ p {
 
 .tiles a:hover {
   @include text-shadow(0px 0px 3px #fff, 0px 0px 7px #000);
+  background-color: rgba(0, 0, 0, 0.1);
 }
 
 .container {
