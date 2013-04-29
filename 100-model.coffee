@@ -62,13 +62,15 @@ class Sand
 
   constructor: ->
     S = 16
-    @dentCanvas = $("<canvas width='#{S/2}' height='#{S}'>")[0]
+    w = S/2 + 1
+    h = S
+    @dentCanvas = $("<canvas width='#{w}' height='#{h}'>")[0]
     dentCtx = @dentCanvas.getContext('2d')
-    id = dentCtx.createImageData(S/2, S)
+    id = dentCtx.createImageData(w, h)
     i = 0
-    for y in [0...S]
-      for x in [0...S/2]
-        dx = x
+    for y in [0...h]
+      for x in [0...w]
+        dx = x - 1
         dy = y - S/2
         d = Math.sqrt(dx*dx + dy*dy) / (S/2)
         int = 255 * (0.37 - 0.37 * Math.cos(2*Math.PI*Math.min(1, d*d)) + 0.5*d*d)
@@ -101,7 +103,7 @@ class Sand
       @ctx.save()
       @ctx.translate(pos.x, pos.y)
       @ctx.rotate(pos.angle)
-      @ctx.drawImage(@dentCanvas, 0, -@dentCanvas.height / 2 - 0.5)
+      @ctx.drawImage(@dentCanvas, -1, -@dentCanvas.height / 2 - 0.5)
       @ctx.restore()
       minX = Math.min(minX, pos.x)
       minY = Math.min(minY, pos.y)
