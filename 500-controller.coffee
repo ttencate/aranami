@@ -6,8 +6,8 @@ $(->
     garden.score = garden.score + 1
     garden.sand.drawText('|', (15*garden.score) - 10, 45)
 
-  toPos = (element, e) ->
-    pagePosition = $(element).offset()
+  toPos = (e) ->
+    pagePosition = $('#container').offset()
     return {x: e.pageX - pagePosition.left, y: e.pageY - pagePosition.top}
 
   beginDrag = (pos) ->
@@ -38,15 +38,15 @@ $(->
     grabAngle = null
     globalOrigin = null
 
-  $('.container').mousedown (e) ->
+  $('.rake').mousedown (e) ->
     if e.which == 1
-      pos = toPos(this, e)
+      pos = toPos(e)
       beginDrag(pos)
     e.preventDefault()
 
-  $('.container').mousemove (e) ->
+  $(document).mousemove (e) ->
     if e.which == 1 && grabAngle != null
-      pos = toPos(this, e)
+      pos = toPos(e)
       moveDrag(pos)
     else
       grabAngle = null
@@ -119,10 +119,8 @@ checkWin = ->
 
 updateGarden = (dt) ->
   rake = garden.rake
-  if rake.rotationOrigin && Math.abs(rake.targetAngle - rake.angle) >= ANGULAR_STEP
-    da = rake.targetAngle - rake.angle
-    if da < -Math.PI
-      da += 2*Math.PI
+  if rake.rotationOrigin && Math.abs(Math.canonicalAngle(rake.targetAngle - rake.angle)) >= ANGULAR_STEP
+    da = Math.canonicalAngle(rake.targetAngle - rake.angle)
     if da > Math.PI
       da -= 2*Math.PI
     if da < 0
