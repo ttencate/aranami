@@ -12,7 +12,6 @@ $(->
     return {x: e.pageX - pagePosition.left, y: e.pageY - pagePosition.top}
 
   beginDrag = (pos) ->
-    incrementScore()
     rake = garden.rake
     local = rake.toLocal(pos)
     localOrigin = null
@@ -22,6 +21,7 @@ $(->
       else
         localOrigin = {x: 1, y: 2}
     if localOrigin
+      incrementScore()
       globalOrigin = rake.toGlobal(localOrigin)
       grabAngle = Math.atan2(pos.y - globalOrigin.y, pos.x - globalOrigin.x)
       rake.rotationOrigin = localOrigin
