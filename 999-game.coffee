@@ -80,6 +80,7 @@ setStars = (i, stars) -> localStorage["stars#{i}"] = stars
 isUnlocked = (i) -> i <= 0 || !isNaN(getStars(i-1))
 
 loadLevel = (i) ->
+  window.location.hash = "#level#{i+1}"
   $('#won').fadeOut(1000)
   level = levels[i]()
   currentLevelIndex = i
@@ -105,7 +106,6 @@ updateLevelLink = (link, i) ->
   link.css('visibility', if isUnlocked(i) then 'visible' else 'hidden')
   link.toggleClass('current', i == currentLevelIndex)
   link.click (e) ->
-    window.location.hash = "#level#{i+1}"
     loadLevel(i)
     e.preventDefault()
 
