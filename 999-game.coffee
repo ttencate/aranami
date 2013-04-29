@@ -76,7 +76,7 @@ sandCtx = null
 
 getStars = (i) -> parseInt(localStorage["stars#{i}"]) # NaN if not yet finished
 setStars = (i, stars) -> localStorage["stars#{i}"] = stars
-isUnlocked = (i) -> i <= 0 || !isNaN(getStars(i))
+isUnlocked = (i) -> i <= 0 || !isNaN(getStars(i-1))
 
 updateLevelLink = (link, i) ->
   link.attr('href', "#level#{i+1}")

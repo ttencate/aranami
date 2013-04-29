@@ -175,6 +175,8 @@ class Rock
     return rock
 
 class Garden
+  score: 0
+
   constructor: (@rake, @rocks, @par) ->
     @sand = new Sand()
 

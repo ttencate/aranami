@@ -3,8 +3,8 @@ $(->
   globalOrigin = null
 
   incrementScore = ->
-    window.score = window.score + 1
-    garden.sand.drawText('|', (15*window.score) - 10, 45)
+    garden.score = garden.score + 1
+    garden.sand.drawText('|', (15*garden.score) - 10, 45)
 
   toPos = (element, e) ->
     pagePosition = $(element).offset()
@@ -85,7 +85,12 @@ drawDents = ->
     pos = rake.toGlobal(tooth)
     sand.dent(pos)
 
-win = -> alert('You win')
+win = ->
+  stars = Math.clamp(0, 3, 3 - (garden.score - garden.par))
+  currentStars = getStars(currentLevelIndex)
+  if isNaN(currentStars) || stars > currentStars
+    setStars(currentLevelIndex, stars)
+    updateLevelLinks()
 
 checkWin = ->
   teethIn = 0
