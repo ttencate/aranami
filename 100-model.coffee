@@ -20,6 +20,10 @@ HANDLE_SIZE = 300
 ANGULAR_STEP = 2*Math.PI / 360
 DEBUG = window.location.hostname == 'localhost'
 
+if !DEBUG
+  startTimer = ->
+  endTimer = ->
+
 class Rake
   rotationOrigin: null
 
@@ -95,13 +99,28 @@ class Sand
     if sandCtx
       sandCtx.clearRect(0, 0, GARDEN_WIDTH, GARDEN_HEIGHT)
 
-  dent: (pos) ->
+  drawDents: (poss) ->
+    startTimer('drawDents')
     @ctx.globalCompositeOperation = 'lighter'
-    x = Math.round(pos.x - @dentCanvas.width / 2)
-    y = Math.round(pos.y - @dentCanvas.height / 2)
-    @ctx.drawImage(@dentCanvas, x, y)
-    @ctx.drawImage(@bumpCanvas, x, y)
-    @drawTo(sandCtx, {x: x - 1, y: y - 1, width: @dentCanvas.width + 2, height: @dentCanvas.height + 2})
+    minX = GARDEN_WIDTH
+    minY = GARDEN_HEIGHT
+    maxX = 0
+    maxY = 0
+    for pos in poss
+      x = Math.round(pos.x - @dentCanvas.width / 2)
+      y = Math.round(pos.y - @dentCanvas.height / 2)
+      @ctx.drawImage(@dentCanvas, x, y)
+      @ctx.drawImage(@bumpCanvas, x, y)
+      minX = Math.min(minX, x)
+      minY = Math.min(minY, y)
+      maxX = Math.max(maxX, x)
+      maxY = Math.max(maxY, y)
+    startTimer('drawDents drawTo')
+    @drawTo(sandCtx, {
+      x: minX - 1, y: minY - 1, width: maxX - minX + @dentCanvas.width + 2, height: maxY - minY + @dentCanvas.height + 2
+    })
+    endTimer()
+    endTimer()
 
   drawText: (text, x, y, size) ->
     onFontLoaded =>
@@ -129,14 +148,24 @@ class Sand
       @ctx.restore()
 
   drawTo: (ctx, rect) ->
+    startTimer('drawTo')
     if !rect then rect = {x: 1, y: 1, width: GARDEN_WIDTH-2, height: GARDEN_HEIGHT-2}
     rect.x = Math.max(1, rect.x)
     rect.y = Math.max(1, rect.y)
     rect.width = Math.min(GARDEN_WIDTH - 1 - rect.x, rect.width)
     rect.height = Math.min(GARDEN_HEIGHT - 1 - rect.y, rect.height)
-    return if rect.width <= 0 || rect.height <= 0
+    if rect.width <= 0 || rect.height <= 0
+      endTimer()
+      return
+    startTimer('getImageData')
     input = @ctx.getImageData(rect.x - 1, rect.y - 1, rect.width + 2, rect.height + 2)
+    inputData = input.data
+    endTimer()
+    startTimer('createImageData')
     output = ctx.createImageData(rect.width, rect.height)
+    outputData = output.data
+    endTimer()
+    startTimer('sandLoop')
     index = (x, y) -> 4 * ((rect.width + 2) * y + x)
     i = 0
     c = index(0, 0)
@@ -147,23 +176,25 @@ class Sand
     light = @light
     posNeg = (pos, neg) -> pos - (neg/255) * (neg + pos)
     for y in [0...rect.height]
+      ay = rect.y + y
       for x in [0...rect.width]
-        vl = posNeg(input.data[l], input.data[l+1])
-        vr = posNeg(input.data[r], input.data[r+1])
-        vt = posNeg(input.data[t], input.data[t+1])
-        vb = posNeg(input.data[b], input.data[b+1])
+        ax = rect.x + x
+        vl = posNeg(inputData[l], inputData[l+1])
+        vr = posNeg(inputData[r], inputData[r+1])
+        vt = posNeg(inputData[t], inputData[t+1])
+        vb = posNeg(inputData[b], inputData[b+1])
         dc = input.data[c+1]
         dx = 0.25 * (vl - vr) / 255
         dy = 0.25 * (vt - vb) / 255
         dot = light.x * dx + light.y * dy
-        random = Math.abs(Math.sin(dot * 78.233 + x * 12.9898 + y * 23.957) * 43758.5453) % 1.0
+        random = Math.abs(Math.sin(dot * 78.233 + ax * 12.9898 + ay * 23.957) * 43758.5453) % 1.0
         f = Math.clamp(-0.7, 0.7, Math.sin(dot) + 0.2 * (random - 0.5))
         int = if f < 0 then 64 else 255
         alpha = 255 * Math.abs(f)
-        output.data[i] = int
-        output.data[i+1] = int
-        output.data[i+2] = int
-        output.data[i+3] = alpha
+        outputData[i] = int
+        outputData[i+1] = int
+        outputData[i+2] = int
+        outputData[i+3] = alpha
         c += 4
         i += 4
         l += 4
@@ -175,7 +206,11 @@ class Sand
       r += 8
       t += 8
       b += 8
+    endTimer()
+    startTimer('putImageData')
     ctx.putImageData(output, rect.x, rect.y)
+    endTimer()
+    endTimer()
 
 class Rock
   x: undefined

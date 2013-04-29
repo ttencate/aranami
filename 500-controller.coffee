@@ -64,6 +64,8 @@ $(->
         e.preventDefault()
       else if e.which == 42 # asterisk
         win()
+      else if e.which == 45 # minus
+        dumpTimes()
       else if e.which == 92 # backslash
         garden.rake.x = RAKE_START_X
         garden.rake.y = RAKE_START_Y
@@ -83,9 +85,7 @@ $(->
 drawDents = ->
   rake = garden.rake
   sand = garden.sand
-  for tooth in rake.teeth
-    pos = rake.toGlobal(tooth)
-    sand.dent(pos)
+  sand.drawDents(rake.toGlobal(tooth) for tooth in rake.teeth)
 
 win = ->
   garden.won = true
