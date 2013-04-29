@@ -92,6 +92,7 @@ loadLevel = (i) ->
   garden.sand.drawTo(sandCtx)
   if i == 0
     drawInstructions()
+  updateLevelLinks()
 
 updateLevelLink = (link, i) ->
   link.attr('href', "#level#{i+1}")
@@ -102,6 +103,7 @@ updateLevelLink = (link, i) ->
   (stars += "\u2606") for j in [0...3-numStars]
   link.html("#{stars} Level #{i+1}")
   link.css('visibility', if isUnlocked(i) then 'visible' else 'hidden')
+  link.toggleClass('current', i == currentLevelIndex)
   link.click (e) ->
     window.location.hash = "#level#{i+1}"
     loadLevel(i)
