@@ -63,12 +63,12 @@ rocks = [
 
 levels = [
   # par 6
-  -> new Garden(new Rake(-30 + 20 + RAKE_WIDTH, 300 - RAKE_LENGTH/2, 0.5 * Math.PI), [ rocks[20].at(203, 402), rocks[6].at(462, 181), rocks[5].at(103, 62), rocks[17].at(738, 423), rocks[4].at(475, 540), rocks[41].at(767, 58), ])
+  -> new Garden(new Rake(), [ rocks[20].at(203, 402), rocks[6].at(462, 181), rocks[5].at(103, 62), rocks[17].at(738, 423), rocks[4].at(475, 540), rocks[41].at(767, 58), ])
 
   # par 6
-  -> new Garden(new Rake(-30 + 20 + RAKE_WIDTH, 300 - RAKE_LENGTH/2, 0.5 * Math.PI), [ rocks[0].at(90, 512), rocks[8].at(374, 528), rocks[11].at(240, 243), rocks[30].at(393, 68), rocks[13].at(109, 76), rocks[42].at(512, 383), rocks[29].at(748, 147), rocks[1].at(666, 459), rocks[38].at(830, 492), ])
+  -> new Garden(new Rake(), [ rocks[0].at(90, 512), rocks[8].at(374, 528), rocks[11].at(240, 243), rocks[30].at(393, 68), rocks[13].at(109, 76), rocks[42].at(512, 383), rocks[29].at(748, 147), rocks[1].at(666, 459), rocks[38].at(830, 492), ])
 
-  -> new Garden(new Rake(-30 + 20 + RAKE_WIDTH, 300 - RAKE_LENGTH/2, 0.5 * Math.PI),
+  -> new Garden(new Rake(),
                 [
                   rocks[40].at(200,  50),
                   rocks[41].at(200, 150),
@@ -78,7 +78,7 @@ levels = [
                   rocks[45].at(300,  50),
                   rocks[46].at(300, 150),
                 ])
-  -> new Garden(new Rake(20 + RAKE_WIDTH, 300 - RAKE_LENGTH/2, 0.5 * Math.PI),
+  -> new Garden(new Rake(),
                 [])
   ]
 

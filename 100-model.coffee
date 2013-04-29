@@ -1,8 +1,20 @@
 GARDEN_WIDTH = 960
 GARDEN_HEIGHT = 600
+
+# These determine the shape of the rake
+RAKE_P = 20
+RAKE_Q = 150
+
+# For grabbing it
 RAKE_LENGTH = 203
 RAKE_WIDTH = 53
-RAKE_TEETH = 12
+
+# Teeth per side
+RAKE_TEETH = 6
+
+RAKE_START_X = 20
+RAKE_START_Y = GARDEN_HEIGHT / 2
+RAKE_START_ANGLE = -1/4 * Math.PI
 HANDLE_SIZE = 300
 MAX_ANGULAR_VELOCITY = 0.002
 DEBUG = window.location.hostname == 'localhost'
@@ -12,15 +24,19 @@ class Rake
 
   # List of line segments to use for collisioning
   segments: [
-    [{x: 1, y: 2}, {x: RAKE_LENGTH - 1, y: 2}]
+    [{x: RAKE_P, y: RAKE_P}, {x: RAKE_Q, y: RAKE_P}]
+    [{x: RAKE_P, y: RAKE_P}, {x: RAKE_P, y: RAKE_Q}]
   ]
-
-  teeth: ({x: 1 + (RAKE_LENGTH - 6) / (RAKE_TEETH - 1) * i, y: 2} for i in [0...RAKE_TEETH])
 
   # x and y are the top left
   # angle is in radians, 0 is horizontal
   constructor: (@x, @y, @angle) ->
+    if @x == undefined then @x = RAKE_START_X
+    if @y == undefined then @y = RAKE_START_Y
+    if @angle == undefined then @angle = RAKE_START_ANGLE
     @targetAngle = @angle
+    @teeth = ({x: (RAKE_Q - RAKE_P) / (RAKE_TEETH - 1) * i, y: RAKE_P} for i in [0...RAKE_TEETH])
+    @teeth = @teeth.concat({x: RAKE_P, y: (RAKE_Q - RAKE_P) / (RAKE_TEETH - 1) * i} for i in [0...RAKE_TEETH])
 
   toLocal: (pos) ->
     dx = pos.x - @x
@@ -40,7 +56,7 @@ class Sand
   light: {x: Math.cos(2/3 * Math.PI), y: -Math.sin(2/3 * Math.PI)}
 
   constructor: ->
-    S = 25
+    S = 18
     @dentCanvas = $("<canvas width='#{S}' height='#{S}'>")[0]
     dentCtx = @dentCanvas.getContext('2d')
     @bumpCanvas = $("<canvas width='#{S}' height='#{S}'>")[0]
@@ -102,6 +118,7 @@ class Sand
     rect.y = Math.max(1, rect.y)
     rect.width = Math.min(GARDEN_WIDTH - 1 - rect.x, rect.width)
     rect.height = Math.min(GARDEN_HEIGHT - 1 - rect.y, rect.height)
+    return if rect.width <= 0 || rect.height <= 0
     input = @ctx.getImageData(rect.x - 1, rect.y - 1, rect.width + 2, rect.height + 2)
     output = ctx.createImageData(rect.width, rect.height)
     index = (x, y) -> 4 * ((rect.width + 2) * y + x)
@@ -161,7 +178,7 @@ class Garden
 
   dump: ->
     lines = []
-    lines.push "-> new Garden(new Rake(-30 + 20 + RAKE_WIDTH, 300 - RAKE_LENGTH/2, 0.5 * Math.PI),"
+    lines.push "-> new Garden(new Rake(),"
     lines.push '['
     for rock in @rocks
       if rock.x > 0 && rock.y > 0

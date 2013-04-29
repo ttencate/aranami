@@ -6,7 +6,6 @@ $(->
     window.score = window.score + 1
     garden.sand.drawText('|', (15*window.score) - 10, 45)
 
-
   toPos = (element, e) ->
     pagePosition = $(element).offset()
     return {x: e.pageX - pagePosition.left, y: e.pageY - pagePosition.top}
@@ -15,11 +14,11 @@ $(->
     rake = garden.rake
     local = rake.toLocal(pos)
     localOrigin = null
-    if local.y > -20 && local.y < RAKE_WIDTH + 20
-      if local.x < RAKE_LENGTH / 2
-        localOrigin = {x: RAKE_LENGTH - 1, y: 2}
+    if local.x > -20 && local.x < RAKE_Q + 20 && local.y > -20 && local.y < RAKE_Q + 20
+      if local.x < local.y
+        localOrigin = {x: RAKE_Q, y: RAKE_P}
       else
-        localOrigin = {x: 1, y: 2}
+        localOrigin = {x: RAKE_P, y: RAKE_Q}
     if localOrigin
       incrementScore()
       globalOrigin = rake.toGlobal(localOrigin)
