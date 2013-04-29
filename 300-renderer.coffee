@@ -10,7 +10,7 @@ makeRockDiv = (rock) ->
   rockDiv.data('rock', rock)
   if DEBUG
     rockDiv.mousemove (e) ->
-      if e.which == 1 && e.shiftKey
+      if e.which == 2
         pos = $(this).position()
         x = pos.left + e.offsetX - 30
         y = pos.top + e.offsetY - 30

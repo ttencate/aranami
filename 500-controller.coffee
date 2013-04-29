@@ -63,9 +63,10 @@ $(->
         garden.dump()
         e.preventDefault()
       else if e.which == 92 # backslash
-        garden.rake.x = -30 + 20 + RAKE_WIDTH
-        garden.rake.y = 300 - RAKE_LENGTH/2
-        garden.rake.angle = 0.5 * Math.PI
+        garden.rake.x = RAKE_START_X
+        garden.rake.y = RAKE_START_Y
+        garden.rake.angle = RAKE_START_ANGLE
+        garden.rake.targetAngle = garden.rake.angle
         updateDom()
         garden.sand.clear()
       else
@@ -83,6 +84,21 @@ drawDents = ->
   for tooth in rake.teeth
     pos = rake.toGlobal(tooth)
     sand.dent(pos)
+
+win = -> alert('You win')
+
+checkWin = ->
+  teethIn = 0
+  teethOut = 0
+  for tooth in garden.rake.teeth
+    t = garden.rake.toGlobal(tooth)
+    # plank is 100x350 at 855x125
+    if t.x >= 855 && t.y >= 125 && t.y <= 125 + 350
+      teethIn++
+    else
+      teethOut++
+  if teethIn >= teethOut
+    win()
 
 updateGarden = (dt) ->
   rake = garden.rake
@@ -143,3 +159,4 @@ updateGarden = (dt) ->
         rake.angle = rake.targetAngle
       drawDents()
       updateDom()
+      checkWin()

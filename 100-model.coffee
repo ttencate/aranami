@@ -186,6 +186,6 @@ class Garden
       if rock.x > 0 && rock.y > 0
         index = (i for i in [0...rocks.length] when rocks[i].sprite == rock.sprite)[0]
         lines.push "rocks[#{index}].at(#{rock.x}, #{rock.y}),"
-    lines.push '])'
+    lines.push ']),'
     console.log lines.join(' ')
 

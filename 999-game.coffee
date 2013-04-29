@@ -62,25 +62,12 @@ rocks = [
 ]
 
 levels = [
-  # par 6
-  -> new Garden(new Rake(), [ rocks[20].at(203, 402), rocks[6].at(462, 181), rocks[5].at(103, 62), rocks[17].at(738, 423), rocks[4].at(475, 540), rocks[41].at(767, 58), ])
-
-  # par 6
-  -> new Garden(new Rake(), [ rocks[0].at(90, 512), rocks[8].at(374, 528), rocks[11].at(240, 243), rocks[30].at(393, 68), rocks[13].at(109, 76), rocks[42].at(512, 383), rocks[29].at(748, 147), rocks[1].at(666, 459), rocks[38].at(830, 492), ])
-
-  -> new Garden(new Rake(),
-                [
-                  rocks[40].at(200,  50),
-                  rocks[41].at(200, 150),
-                  rocks[42].at(200, 250),
-                  rocks[43].at(200, 350),
-                  rocks[44].at(200, 450),
-                  rocks[45].at(300,  50),
-                  rocks[46].at(300, 150),
-                ])
-  -> new Garden(new Rake(),
-                [])
-  ]
+  -> new Garden(new Rake(), []),
+  # par 4
+  -> new Garden(new Rake(), [ rocks[0].at(343, 418), rocks[1].at(606, 316), rocks[4].at(466, 502), ]),
+  # par 5
+  -> new Garden(new Rake(), [ rocks[2].at(562, 209), rocks[3].at(345, 424), rocks[5].at(824, 367), rocks[6].at(620, 505), ]),
+]
 
 ctx = null
 sandCtx = null
@@ -97,7 +84,7 @@ $(->
       urls: [ 'fonts.css' ]
     }
     fontactive: ->
-      garden.sand.drawText("\u203a\u203a\u203a DRAG THE RAKE", 60, 390)
+      garden.sand.drawText("\u203a\u203a\u203a DRAG THE RAKE", 160, 210)
       garden.sand.drawText("TO HERE \u203a\u203a\u203a", 590, 310)
   }
   (->
