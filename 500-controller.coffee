@@ -82,11 +82,6 @@ $(->
           $('.container').append(makeRockDiv(rock))
 )
 
-drawDents = ->
-  rake = garden.rake
-  sand = garden.sand
-  sand.drawDents(rake.toGlobal(tooth) for tooth in rake.teeth)
-
 win = ->
   garden.won = true
   stars = Math.clamp(0, 3, 3 - (garden.score - garden.par))
@@ -128,6 +123,7 @@ updateGarden = (dt) ->
     oldX = rake.x
     oldY = rake.y
     oldAngle = rake.angle
+    oldTeeth = (rake.toGlobal(tooth) for tooth in rake.teeth)
 
     origin = rake.rotationOrigin
     rake.x += origin.x * Math.cos(rake.angle) - origin.y * Math.sin(rake.angle)
@@ -163,6 +159,11 @@ updateGarden = (dt) ->
       rake.y = oldY
       rake.angle = oldAngle
     else
-      drawDents()
+      dents = for i in [0...rake.teeth.length]
+        dent = rake.toGlobal(rake.teeth[i])
+        oldTooth = oldTeeth[i]
+        dent.angle = Math.atan2(dent.y - oldTooth.y, dent.x - oldTooth.x)
+        dent
+      garden.sand.drawDents(dents)
       updateDom()
       checkWin()

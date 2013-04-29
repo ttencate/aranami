@@ -89,10 +89,16 @@ loadLevel = (i) ->
   $(".rock").remove()
   for rock in level.rocks
     rockDiv = makeRockDiv(rock)
-  #$('#debug').append window.garden.sand.canvas
+  $('#debug').append window.garden.sand.canvas
   $('#par').html level.par
   updateDom()
   garden.sand.drawTo(sandCtx)
+  dents = []
+  for tooth in garden.rake.teeth
+    tooth = garden.rake.toGlobal(tooth)
+    dents.push({x: tooth.x, y: tooth.y, angle: 0})
+    dents.push({x: tooth.x, y: tooth.y, angle: Math.PI})
+  garden.sand.drawDents(dents)
   if i == 0
     drawInstructions()
   updateLevelLinks()
@@ -124,8 +130,9 @@ makeLevelLinks = ->
     makeLevelLink(link, i)
 
 drawInstructions = ->
-  garden.sand.drawText("\u203a\u203a\u203a DRAG THE RAKE", 170, 212)
-  garden.sand.drawText("TO HERE \u203a\u203a\u203a", 590, 310)
+  garden.sand.drawText("\u203a\u203a\u203a DRAG THE RAKE", 170, 212, 40, false)
+  garden.sand.drawText("TO HERE \u203a\u203a\u203a", 590, 310, 40, false)
+  onFontLoaded -> garden.sand.drawTo(sandCtx)
 
 fontLoaded = false
 fontLoadedHandlers = []
