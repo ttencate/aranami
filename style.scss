@@ -55,14 +55,13 @@ canvas {
 }
 
 .rake {
-  width: $rake-length;
-  height: $rake-thickness;
+  width: 181px;
+  height: 182px;
   position: absolute;
   left: 0;
   top: 0;
   // background-color: red;
-  background-image: url("hark.png");
-  overflow: visible;
+  background-image: url("houtenhark.png");
   z-index: 10;
   @include transform-origin(0px, 0px);
 }

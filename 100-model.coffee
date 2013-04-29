@@ -2,15 +2,15 @@ GARDEN_WIDTH = 960
 GARDEN_HEIGHT = 600
 
 # These determine the shape of the rake
-RAKE_P = 20
+RAKE_P = 33
 RAKE_Q = RAKE_P + 141
 
 # For grabbing it
 RAKE_LENGTH = 203
 RAKE_WIDTH = 53
 
-RAKE_TOOTH_START = 11
-RAKE_TOOTH_STEP = 26
+RAKE_TOOTH_START = 12
+RAKE_TOOTH_STEP = 25.5
 RAKE_TEETH = 6
 
 RAKE_START_X = 20
@@ -18,7 +18,7 @@ RAKE_START_Y = GARDEN_HEIGHT / 2
 RAKE_START_ANGLE = -1/4 * Math.PI
 HANDLE_SIZE = 300
 MAX_ANGULAR_VELOCITY = 0.002
-DEBUG = window.location.hostname == 'localhost'
+DEBUG = false#window.location.hostname == 'localhost'
 
 class Rake
   rotationOrigin: null
