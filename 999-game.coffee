@@ -66,12 +66,19 @@ levels = [
   -> new Garden(new Rake(), [ rocks[0].at(343, 418), rocks[1].at(606, 316), rocks[4].at(466, 502), ], 4),
   -> new Garden(new Rake(), [ rocks[2].at(562, 209), rocks[3].at(345, 424), rocks[5].at(824, 367), rocks[6].at(620, 505), ], 5),
 ]
+currentLevelIndex = 0
 
 ctx = null
 sandCtx = null
 
 $(->
-  loadLevel(levels[0]())
+  match = /^#level(\d+)$/.exec(window.location.hash)
+  if match
+    currentLevelIndex = parseInt(match[1]) - 1
+    if currentLevelIndex < 0 || currentLevelIndex >= levels.length
+      currentLevelIndex = 0
+
+  loadLevel(levels[currentLevelIndex]())
   ctx = $('#canvas')[0].getContext('2d')
   sandCtx = $('#sand')[0].getContext('2d')
   garden.sand.drawTo(sandCtx)
