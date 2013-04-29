@@ -62,11 +62,9 @@ rocks = [
 ]
 
 levels = [
-  -> new Garden(new Rake(), []),
-  # par 4
-  -> new Garden(new Rake(), [ rocks[0].at(343, 418), rocks[1].at(606, 316), rocks[4].at(466, 502), ]),
-  # par 5
-  -> new Garden(new Rake(), [ rocks[2].at(562, 209), rocks[3].at(345, 424), rocks[5].at(824, 367), rocks[6].at(620, 505), ]),
+  -> new Garden(new Rake(), [], 4),
+  -> new Garden(new Rake(), [ rocks[0].at(343, 418), rocks[1].at(606, 316), rocks[4].at(466, 502), ], 4),
+  -> new Garden(new Rake(), [ rocks[2].at(562, 209), rocks[3].at(345, 424), rocks[5].at(824, 367), rocks[6].at(620, 505), ], 5),
 ]
 
 ctx = null

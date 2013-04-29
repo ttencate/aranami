@@ -175,7 +175,7 @@ class Rock
     return rock
 
 class Garden
-  constructor: (@rake, @rocks, @text) ->
+  constructor: (@rake, @rocks, @par) ->
     @sand = new Sand()
 
   dump: ->
