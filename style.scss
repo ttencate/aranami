@@ -177,7 +177,7 @@ canvas {
   display: inline-block;
   vertical-align: top;
   position: relative;
-  width: 0.65em;
+  width: 0.85em;
   margin: 0;
   padding: 0;
 }
@@ -186,6 +186,7 @@ canvas {
   position: absolute;
   left: 0;
   top: 0;
+  line-height: 220px;
   @include text-shadow(10px 10px 20px rgba(0,0,0,0.5));
 }
 
