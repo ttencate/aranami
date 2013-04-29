@@ -171,7 +171,9 @@ class Sand
     lightX = @light.x
     lightY = @light.y
     for y in [0...rect.height]
+      ay = rect.y + y
       for x in [0...rect.width]
+        ax = rect.x + x
         vl = inputData[l]
         vr = inputData[r]
         vt = inputData[t]
@@ -180,7 +182,11 @@ class Sand
         dx = 0.25 * (vl - vr) / 255
         dy = 0.25 * (vt - vb) / 255
         dot = lightX * dx + lightY * dy
-        lightness = 2 * dot - 0.1 * Math.max(0, (128-vc) / 128)
+        a = ax + GARDEN_WIDTH*ay + vl + vr + vt + vb
+        random = (a*2654435761 % 0x100000000) / 0x100000000
+        lightness = (2 * dot - 0.1 * Math.max(0, (128-vc) / 128))
+        if vc != 128
+          lightness += 0.2 * (random - 0.5)
         int = if lightness < 0 then 64 else 255
         alpha = 255 * Math.abs(lightness)
         outputData[i] = int
