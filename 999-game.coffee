@@ -73,28 +73,29 @@ currentLevelIndex = 0
 ctx = null
 sandCtx = null
 
+getStars = (i) -> parseInt(localStorage["stars#{i}"]) # NaN if not yet finished
+setStars = (i, stars) -> localStorage["stars#{i}"] = stars
+isUnlocked = (i) -> i <= 0 || !isNaN(getStars(i))
+
 updateLevelLink = (link, i) ->
   link.attr('href', "#level#{i+1}")
-  stars = "\u2605\u2606\u2606"
+  numStars = getStars(i)
+  if isNaN(numStars) then numStars = 0
+  stars = ""
+  (stars += "\u2605") for j in [0...numStars]
+  (stars += "\u2606") for j in [0...3-numStars]
   link.html("#{stars} Level #{i+1}")
+  link.css('visibility', if isUnlocked(i) then 'visible' else 'hidden')
+  link.click (e) ->
+    window.location.hash = "#level#{i+1}"
+    e.preventDefault()
 
 updateLevelLinks = ->
   for i in [0...levels.length]
     link = $("#level#{i}")
     updateLevelLink(link, i)
 
-$(->
-  match = /^#level(\d+)$/.exec(window.location.hash)
-  if match
-    currentLevelIndex = parseInt(match[1]) - 1
-    if currentLevelIndex < 0 || currentLevelIndex >= levels.length
-      currentLevelIndex = 0
-  updateLevelLinks()
-
-  ctx = $('#canvas')[0].getContext('2d')
-  sandCtx = $('#sand')[0].getContext('2d')
-  loadLevel(levels[currentLevelIndex]())
-
+drawInstructions = ->
   window.WebFontConfig = {
     custom: {
       families: [ 'Short Stack' ]
@@ -113,15 +114,26 @@ $(->
     s.parentNode.insertBefore(wf, s)
   )()
 
+$(->
+
+  match = /^#level(\d+)$/.exec(window.location.hash)
+  if match
+    currentLevelIndex = parseInt(match[1]) - 1
+    if currentLevelIndex < 0 || currentLevelIndex >= levels.length
+      currentLevelIndex = 0
+  updateLevelLinks()
+
+  ctx = $('#canvas')[0].getContext('2d')
+  sandCtx = $('#sand')[0].getContext('2d')
+  loadLevel(levels[currentLevelIndex]())
+  if currentLevelIndex == 0
+    drawInstructions()
+
   createjs.Sound.registerSound('test.mp3|test.ogg', 'test', 3)
   $('#test-sound').click((e) ->
     createjs.Sound.play('test')
     e.preventDefault()
   )
-
-  $("#canvas").click (event) ->
-    # TODO things
-    event.preventDefault()
 
   lastUpdate = Date.now()
   update = ->
@@ -142,16 +154,15 @@ $(->
   updateDom()
 
   music = $('#music')[0]
-  musicCheckbox = $('#enable-music')
+  musicLink = $('#enable-music')
   music.volume = 0.3
+  getMusic = -> localStorage.music == undefined || localStorage.music == "true"
   setMusic = (enable) ->
     if enable then music.play() else music.pause()
-    musicCheckbox.prop('checked', enable)
+    musicLink.find('.icon').html(if enable then "\u266b" else "\u2a2f")
     localStorage.music = enable.toString()
-  musicCheckbox.click (e) ->
-    console.log e
-    setMusic($(this).is(':checked'))
-  if localStorage.music == undefined
-    localStorage.music = "true"
-  setMusic(localStorage.music == "true")
+  musicLink.click (e) ->
+    setMusic(!getMusic())
+    e.preventDefault()
+  setMusic(getMusic())
 )
