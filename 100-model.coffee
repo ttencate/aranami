@@ -3,13 +3,14 @@ GARDEN_HEIGHT = 600
 
 # These determine the shape of the rake
 RAKE_P = 20
-RAKE_Q = 150
+RAKE_Q = RAKE_P + 141
 
 # For grabbing it
 RAKE_LENGTH = 203
 RAKE_WIDTH = 53
 
 # Teeth per side
+RAKE_TOOTH_STEP = 26
 RAKE_TEETH = 6
 
 RAKE_START_X = 20
@@ -35,8 +36,8 @@ class Rake
     if @y == undefined then @y = RAKE_START_Y
     if @angle == undefined then @angle = RAKE_START_ANGLE
     @targetAngle = @angle
-    @teeth = ({x: (RAKE_Q - RAKE_P) / (RAKE_TEETH - 1) * i, y: RAKE_P} for i in [0...RAKE_TEETH])
-    @teeth = @teeth.concat({x: RAKE_P, y: (RAKE_Q - RAKE_P) / (RAKE_TEETH - 1) * i} for i in [0...RAKE_TEETH])
+    @teeth = ({x: RAKE_TOOTH_STEP / 2 + RAKE_TOOTH_STEP * i, y: RAKE_P} for i in [0...RAKE_TEETH])
+    @teeth = @teeth.concat({x: RAKE_P, y: RAKE_TOOTH_STEP / 2 + RAKE_TOOTH_STEP * i} for i in [0...RAKE_TEETH])
 
   toLocal: (pos) ->
     dx = pos.x - @x
