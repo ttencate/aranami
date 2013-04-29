@@ -88,6 +88,7 @@ drawDents = ->
     sand.dent(pos)
 
 win = ->
+  garden.won = true
   stars = Math.clamp(0, 3, 3 - (garden.score - garden.par))
   currentStars = getStars(currentLevelIndex)
 
@@ -105,19 +106,15 @@ win = ->
     updateLevelLinks()
 
 checkWin = ->
-  teethIn = 0
-  teethOut = 0
   for tooth in garden.rake.teeth
-    t = garden.rake.toGlobal(tooth)
+    pos = garden.rake.toGlobal(tooth)
     # plank is 100x350 at 855x125
-    if t.x >= 855 && t.y >= 125 && t.y <= 125 + 350
-      teethIn++
-    else
-      teethOut++
-  if teethIn >= teethOut
-    win()
+    if pos.x >= 855 && pos.y >= 125 && pos.y <= 125 + 350
+      win()
+      return
 
 updateGarden = (dt) ->
+  return if garden.won
   rake = garden.rake
   if rake.rotationOrigin && Math.abs(Math.canonicalAngle(rake.targetAngle - rake.angle)) >= ANGULAR_STEP
     da = Math.canonicalAngle(rake.targetAngle - rake.angle)
