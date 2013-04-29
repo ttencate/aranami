@@ -202,7 +202,7 @@ $(->
   getMusic = -> localStorage.music == undefined || localStorage.music == "true"
   setMusic = (enable) ->
     if enable then music.play() else music.pause()
-    musicLink.find('.icon').html(if enable then "\u266b" else "\u2a2f")
+    musicLink.find('.icon').html(if enable then "&#x266b;" else "&times;")
     localStorage.music = enable.toString()
   musicLink.click (e) ->
     setMusic(!getMusic())
