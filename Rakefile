@@ -23,7 +23,7 @@ generate '.svg', '.png' do |from, to|
 end
 
 generate '.scss', '.css' do |from, to|
-  sh "compass compile --quiet --sass-dir . --css-dir . #{from}"
+  sh "compass compile --quiet --sass-dir . --css-dir ."
 end
 
 generate '.wav', '.wav.base64' do |from, to|
